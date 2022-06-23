@@ -25,7 +25,7 @@ export default function Menu() {
             <img className="logo" src={Logo} alt='' />
             <div className='name'>Sébastien THOUVENIN</div>
             <Link className='param' to="/params">
-                <img className="paramIcon" src={paramIcon} alt='' onClick={ script.colorNav }/>
+                <img className="paramIcon" src={paramIcon} alt='' onClick={ () => script.colorNav() }/>
             </Link>
             <Navbar className="navbar" />
             <div className='main'>

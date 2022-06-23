@@ -21,7 +21,7 @@ src.pipe(cipher).pipe(output);
 
 function Recept() {
   return (
-    <div onClick={script.cryptTest}>
+    <div onClick={() => script.cryptTest() }>
       Boite de r&#xE9;ception      
     </div>
   );
