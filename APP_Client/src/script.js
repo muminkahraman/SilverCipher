@@ -1,7 +1,7 @@
 const app = window.require('electron').remote
 const fs = app.require('fs')
 const crypto = app.require("crypto");
-const axios = app.require("axios");
+//const axios = app.require("axios");
 
 function colorNav(paramId) {
     const recept = document.getElementById('recept')
@@ -12,8 +12,6 @@ function colorNav(paramId) {
     if (brouillon) {brouillon.style.backgroundColor='grey';}
     const blank = document.getElementById(paramId)
     if (blank) {blank.style.backgroundColor='white';}
-
-    axios.get('http://18.233.162.213:3001/api/user/all').then((response) => console.log(response.data))
 }
 
 function cryptTest() {
@@ -26,6 +24,8 @@ function cryptTest() {
     const output = fs.createWriteStream("tesdddt.enc");
     const cipher = crypto.createCipheriv(algorithm, key, iv);
     src.pipe(cipher).pipe(output); }
+
+    
 
 
 
