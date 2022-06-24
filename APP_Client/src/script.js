@@ -26,6 +26,7 @@ function cryptTest() {
     src.pipe(cipher).pipe(output); }
 
 
+
 module.exports = {
     colorNav,
     cryptTest
