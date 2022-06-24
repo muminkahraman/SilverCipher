@@ -1,11 +1,11 @@
 {
-  "name": "react-electron",
+  "name": "SilverCipher",
   "version": "0.1.0",
-  "description": "Simple boilerplate for developing an Electron app with React",
-  "author": "willjw3",
+  "description": "End to end ciphered file transfer",
+  "author": "306",
   "build": {
-    "appId": "react.electron",
-    "productName": "react-electron",
+    "appId": "silver.cipher",
+    "productName": "silver-cipher",
     "mac": {
       "icon": "build/logo512.png",
       "target": "tar.gz"
