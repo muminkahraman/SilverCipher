@@ -6,10 +6,6 @@
   "build": {
     "appId": "silver.cipher",
     "productName": "silver-cipher",
-    "mac": {
-      "icon": "build/logo512.png",
-      "target": "tar.gz"
-    },
     "linux": {
       "category": "Utils",
       "icon": "build/icon.png",
