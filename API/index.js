@@ -7,14 +7,46 @@ app.use(cors());
 app.use(express.json());
 
 const db = mysql.createConnection({
-    user: 'mysql_aws',
-    host: 'localhost',
-    password: 'AWSprojet2022.@',
+    user: 'root',
+    host: '18.233.162.213',
+    password: 'AWSprojet2020.@',
     database: 'silver_cipher'
 });
 
-db.query('insert into users (pseudo, mail, cle_publique, tel, path_cert) values (?,?,?,?,?)',
-        ["pssseudo", "mailll", "cleeeeee", "tellll", "pathhh"],
+app.get("/api/user/all", (req, res) => {
+    db.query('select * from users',
+    (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(result);
+        }
+    })
+});
+
+app.get("/api/user", (req, res) => {
+    const pseudo = req.body.pseudo;
+    db.query('select * from users where pseudo like ?',[pseudo],
+    (err, result) => {
+        if (err) {
+            console.log(err);
+            console.log(1)
+        } else {
+            res.send(result);
+            console.log(2)
+        }
+    })
+});
+
+app.post('/api/user', (req, res) => {
+    const pseudo = req.body.pseudo;
+    const mail = req.body.mail;
+    const cle_publique = req.body.cle_publique;
+    const tel = req.body.tel;
+    const path_cert = req.body.path_cert;
+
+    db.query('insert into users (pseudo, mail, cle_publique, tel, path_cert) values (?,?,?,?,?)',
+        [pseudo, mail, cle_publique, tel, path_cert],
         (err, result) => {
             if (err) {
                 console.log(err);
@@ -23,7 +55,80 @@ db.query('insert into users (pseudo, mail, cle_publique, tel, path_cert) values 
             }
         }
     );
+});
 
+app.get('/api/transfer/all', (req, res) => {
+
+    db.query('select * from transfer',
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send(result);
+            }
+        }
+    );
+});
+
+app.get('/api/transfer/receive', (req, res) => {
+
+    db.query('select * from transfer where destinataire = (select idUser from users where pseudo like ?)',[req.body.pseudo],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send(result);
+            }
+        }
+    );
+});
+
+app.get('/api/transfer/sent', (req, res) => {
+
+    db.query('select * from transfer where expediteur = (select idUser from users where pseudo like ?)',[req.body.pseudo],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send(result);
+            }
+        }
+    );
+});
+
+app.post('/api/transfer', (req, res) => {
+    const expediteur = req.body.expediteur;
+    const destinataire = req.body.destinataire;
+    const pathFichCrypt = req.body.pathFichCrypt;
+    const pathCleCrypt = req.body.pathCleCrypt;
+    const pathCont = req.body.pathCont;
+
+    db.query('insert into transfer (expediteur, destinataire, path_fich_crypt, path_cle_crypt, path_contexte) values (?,?,?,?,?)',
+        [expediteur, destinataire, pathFichCrypt, pathCleCrypt, pathCont],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send(result);
+            }
+        }
+    );
+});
+
+app.delete('/api/user', (req, res) => {
+
+    db.query('delete from users where idUser = ?',[req.body.id],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send(result);
+            }
+        }
+    );
+});
+
+/* 
 
 app.post("/api/connect", (req, res) => {
     const mail = req.body.mail;
@@ -92,11 +197,13 @@ app.delete("/api/user/:id", (req, res) => {
         }
     })
 });
+*/
 
 app.listen(3001, () => {
     console.log("hey server runnin")
 })
 
+/*
 app.put('/api/user/:id', (req, res) => {
     const idUser = req.params.id;
     const civilite = req.body.civilite;
@@ -305,4 +412,4 @@ app.get("/api/skill", (req, res) => {
             console.log(2)
         }
     })
-});
+}); */
