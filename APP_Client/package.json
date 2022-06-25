@@ -30,6 +30,7 @@
     "axios": "^0.27.2",
     "cross-env": "^6.0.3",
     "electron-is-dev": "^1.1.0",
+    "electron-store": "^8.0.2",
     "fs": "^0.0.1-security",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",

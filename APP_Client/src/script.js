@@ -1,6 +1,14 @@
 const app = window.require('electron').remote
 const fs = app.require('fs')
 const crypto = app.require("crypto");
+const Store = app.require('electron-store');
+const store = new Store();
+
+store.set({
+    'username': 'seb'
+})
+console.log(store.get('username'))
+
 //const axios = app.require("axios");
 
 function colorNav(paramId) {
