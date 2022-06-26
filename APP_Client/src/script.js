@@ -3,13 +3,16 @@ const fs = app.require('fs')
 const crypto = app.require("crypto");
 const Store = app.require('electron-store');
 const store = new Store();
-
-store.set({
-    'username': 'seb'
-})
-console.log(store.get('username'))
-
 //const axios = app.require("axios");
+
+function creeStore() {
+    store.set({
+    'username': 'seb'
+})}
+
+function getusername() {
+    console.log(store.get('username'))
+}
 
 function colorNav(paramId) {
     const recept = document.getElementById('recept')
@@ -31,7 +34,8 @@ function cryptTest() {
     const src = fs.createReadStream("2099058.png");
     const output = fs.createWriteStream("tesdddt.enc");
     const cipher = crypto.createCipheriv(algorithm, key, iv);
-    src.pipe(cipher).pipe(output); }
+    src.pipe(cipher).pipe(output); 
+}
 
     
 
@@ -39,5 +43,7 @@ function cryptTest() {
 
 module.exports = {
     colorNav,
-    cryptTest
+    cryptTest,
+    creeStore,
+    getusername
 }

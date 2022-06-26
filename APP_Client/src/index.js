@@ -8,5 +8,4 @@ import Menu from './pages/menu'
 ReactDOM.render(
     <Menu />,
     document.getElementById("root")
-
 )
