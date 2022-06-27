@@ -396,7 +396,7 @@ code {
     border-radius: 10px;
     align-self: center;
     text-align: center;
-    height: auto;
+    height: 30px;
     width: 70%;
     margin-left: 15%;
 }
