@@ -17,7 +17,7 @@ const Sign = () => {
                 <input type="password" id="password" placeholder="Mot de passe" />
                 
                 <button onClick={() => {
-                  script.creeStore(
+                  script.signUp(
                   document.getElementById("pseudo").value,
                   document.getElementById("email").value,
                   document.getElementById("tel").value,
