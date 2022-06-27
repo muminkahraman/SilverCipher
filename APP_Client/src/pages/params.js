@@ -6,7 +6,7 @@ const script = require("../script")
 const Params = () => {
     return (
         <>
-        <div onClick={script.getusername}>
+        <div onClick={() => script.getusername() }>
             Param&#232;tres
         </div>
         </>

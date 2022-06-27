@@ -6,11 +6,12 @@ const store = new Store();
 const axios = app.require("axios");
 import React, { useState } from "react";
 
-function creeStore() {
-    store.set('username', 'seb')}
+function creeStore(username, email, telephone, password ) {
+    store.set('User',{'username': username,'email': email,'phone': telephone,'password': password},
+)}
 
 function getusername() {
-    console.log(store.get('username'))
+    console.log(store.get('User.username'))
 }
 
 function colorNav(paramId) {

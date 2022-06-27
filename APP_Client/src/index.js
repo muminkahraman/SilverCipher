@@ -2,10 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './App.css';
 
-import Menu from './pages/menu'
+import Main from './pages/main'
 
 
 ReactDOM.render(
-    <Menu />,
+    <Main />,
     document.getElementById("root")
 )

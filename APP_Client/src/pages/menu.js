@@ -24,17 +24,17 @@ export default function Menu() {
         <Router>
             <img className="logo" src={Logo} alt='' />
             <div className='name'> Seb </div>
-            <Link className='param' to="/params">
+            <Link className='param' to="/menu/params">
                 <img className="paramIcon" src={paramIcon} alt='' onClick={ () => script.colorNav() }/>
             </Link>
             <Navbar className="navbar" />
             <div className='main'>
                 <main>
-                    <Route exact path="/" component={Recept} />
-                    <Route path="/params" component={Params} />
-                    <Route path="/envoi" component={Envoi} />
-                    <Route path="/brouillon" component={Brouillon} />
-                    <Route path="/new" component={New} />
+                    <Route exact path="/menu/recept" component={Recept} />
+                    <Route path="/menu/params" component={Params} />
+                    <Route path="/menu/envoi" component={Envoi} />
+                    <Route path="/menu/brouillon" component={Brouillon} />
+                    <Route path="/menu/new" component={New} />
                 </main>
             </div>
         </Router>
