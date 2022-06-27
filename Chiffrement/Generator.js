@@ -19,7 +19,7 @@ function GeneratePair(){
 }
 */
 
-function GeneratePairCrypto(){
+const GeneratePairCrypto = () => {
 
     crypto.generateKeyPair('rsa', {
     modulusLength: 4096,

@@ -2,15 +2,38 @@ const express = require('express');
 const app = express();
 const mysql = require('mysql');
 const cors = require('cors');
+const fileUpload = require('express-fileupload');
+const path = require('path');
+const util = require('util');
 
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(fileUpload());
 
 const db = mysql.createConnection({
     user: 'root',
     host: '18.233.162.213',
-    password: 'AWSprojet2020.@',
+    password: 'AWSprojet2020.@',  
     database: 'silver_cipher'
+});
+
+app.post("/api/upload", async (req, res) => {
+    if (!req.files) {
+        return res.status(400).send('No files were uploaded.');
+    }
+
+    const file =  req.files.file;
+    const filename = file.name;
+    const size = file.data.length;
+    const extension = path.extname(filename);
+
+    const url = "/silver-cipher/data/public_keys/" + filename;
+    await util.promisify(file.mv)(".public" + url);
+    res.json({
+        message: "File uploaded successfully",
+        url: url,
+    })
 });
 
 app.get("/api/user/all", (req, res) => {

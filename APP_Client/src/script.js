@@ -3,12 +3,11 @@ const fs = app.require('fs')
 const crypto = app.require("crypto");
 const Store = app.require('electron-store');
 const store = new Store();
-//const axios = app.require("axios");
+const axios = app.require("axios");
+import React, { useState } from "react";
 
 function creeStore() {
-    store.set({
-    'username': 'seb'
-})}
+    store.set('username', 'seb')}
 
 function getusername() {
     console.log(store.get('username'))
@@ -37,7 +36,11 @@ function cryptTest() {
     src.pipe(cipher).pipe(output); 
 }
 
-    
+const getUsers = () => {
+    axios.get("http://localhost:3000/api/user/all")
+        .then((response) => {store.set ('users', response.data)})
+        .then(() => {console.log(store.get('users'))});
+}
 
 
 
@@ -45,5 +48,6 @@ module.exports = {
     colorNav,
     cryptTest,
     creeStore,
-    getusername
+    getusername,
+    getUsers
 }
