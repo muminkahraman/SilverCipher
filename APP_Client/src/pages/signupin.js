@@ -18,7 +18,7 @@ const Sign = () => {
                 <input type="tel" id="tel" placeholder="T�l�phone" />
                 <input type="password" id="password" placeholder="Mot de passe" />
                 
-                <button onClick={() => {
+                <Link to="/verify" onClick={() => {
                   script.signUp(
                   document.getElementById("pseudo").value,
                   document.getElementById("email").value,
@@ -26,10 +26,7 @@ const Sign = () => {
                   document.getElementById("password").value
                   
                 )
-                console.log(document.getElementById("pseudo").value)
-                script.getUsers();
-
-                }}>Inscrivez vous</button>
+                }}>Inscrivez vous</Link>
             </form>
         </div>
         <div className="form-container sign-in-container">
