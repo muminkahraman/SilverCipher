@@ -1,6 +1,7 @@
 import React from "react"
 import "../App.css"
 import { Link } from "react-router-dom"
+import script from '../script'
 
 const Sign = () => {
     return (
@@ -10,12 +11,20 @@ const Sign = () => {
         <div className="form-container sign-up-container">
             <form action="#">
                 <h1>Créer un compte</h1>
-                <input type="text" placeholder="Pseudo" />
-                <input type="email" placeholder="Email" />
-                <input type="tel" placeholder="Téléphone" />
-                <input type="password" placeholder="Mot de passe" />
+                <input type="text" id="pseudo" placeholder="Pseudo" />
+                <input type="email" id="email" placeholder="Email" />
+                <input type="tel" id="tel" placeholder="Téléphone" />
+                <input type="password" id="password" placeholder="Mot de passe" />
                 
-                <button>Inscrivez vous</button>
+                <button onClick={() => {
+                  script.creeStore(
+                  document.getElementById("pseudo").value,
+                  document.getElementById("email").value,
+                  document.getElementById("tel").value,
+                  document.getElementById("password").value
+                )
+                console.log(document.getElementById("pseudo").value)
+                }}>Inscrivez vous</button>
             </form>
         </div>
         <div className="form-container sign-in-container">
