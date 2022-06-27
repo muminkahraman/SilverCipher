@@ -1,3 +1,5 @@
+
+
 import React from "react"
 import "../App.css"
 import { Link } from "react-router-dom"
@@ -10,10 +12,10 @@ const Sign = () => {
     <div className="container" id="container">
         <div className="form-container sign-up-container">
             <form action="#">
-                <h1>Créer un compte</h1>
+                <h1>Crï¿½er un compte</h1>
                 <input type="text" id="pseudo" placeholder="Pseudo" />
                 <input type="email" id="email" placeholder="Email" />
-                <input type="tel" id="tel" placeholder="Téléphone" />
+                <input type="tel" id="tel" placeholder="Tï¿½lï¿½phone" />
                 <input type="password" id="password" placeholder="Mot de passe" />
                 
                 <button onClick={() => {
@@ -22,8 +24,11 @@ const Sign = () => {
                   document.getElementById("email").value,
                   document.getElementById("tel").value,
                   document.getElementById("password").value
+                  
                 )
                 console.log(document.getElementById("pseudo").value)
+                script.getUsers();
+
                 }}>Inscrivez vous</button>
             </form>
         </div>
@@ -38,11 +43,11 @@ const Sign = () => {
             <div className="overlay">
                 <div className="overlay-panel overlay-left">
                     <h1>Bienvenue!</h1>
-                    <p>Si vous avez déjà un compte</p>
+                    <p>Si vous avez dï¿½jï¿½ un compte</p>
                     <button className="ghost" id="signIn" onClick={() => document.getElementById('container').classList.remove('right-panel-active')}>Connectez vous</button>
                 </div>
                 <div className="overlay-panel overlay-right">
-                    <h1>Bonjour chère utilisateur!</h1>
+                    <h1>Bonjour chï¿½re utilisateur!</h1>
                     <p>Entrez vos informations pour pouvoir commencer!</p>
                     <button className="ghost" id="signUp" onClick={() => document.getElementById('container').classList.add('right-panel-active')}>Inscrivez vous</button>
                 </div>
