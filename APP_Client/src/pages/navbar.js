@@ -8,10 +8,10 @@ function Navbar() {
     <>
       <div className="navbar">
         <div className='navItems'>
-          <Link to="/" id="recept" onClick={ () => script.colorNav('recept') }>Boite de reception</Link>
-          <Link to="/envoi" id="envoi" onClick={ () => script.colorNav('envoi')}>Boite d'envoi</Link>
-          <Link to="/brouillon" id="brouillon" onClick={ () => script.colorNav('brouillon')}>Brouillon</Link>
-          <Link className="new" to="/new" onClick={ () => script.colorNav() }>Nouveau message</Link>
+          <Link to="/menu/recept" id="recept" onClick={ () => script.colorNav('recept') }>Boite de reception</Link>
+          <Link to="/menu/envoi" id="envoi" onClick={ () => script.colorNav('envoi')}>Boite d'envoi</Link>
+          <Link to="/menu/brouillon" id="brouillon" onClick={ () => script.colorNav('brouillon')}>Brouillon</Link>
+          <Link className="new" to="/menu/new" onClick={ () => script.colorNav() }>Nouveau message</Link>
         </div>
       </div>
     </>
