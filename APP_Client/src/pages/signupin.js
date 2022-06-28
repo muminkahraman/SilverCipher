@@ -3,6 +3,9 @@ import "../App.css"
 import { Link } from "react-router-dom"
 import { useStateValue } from '../state/StateProvider';
 
+const app = window.require('electron').remote
+const fs = app.require('fs')
+
 const Sign = () => {
 
     const [{ username, password }, dispatch] = useStateValue();
@@ -10,13 +13,29 @@ const Sign = () => {
 
     const creeUser = (pseudo, mail, tel, pass) => {
 
-        dispatch({type: "SET_USER", payload: {
+        dispatch({
+            type: "SET_USER", payload: {
+                username: pseudo,
+                email: mail,
+                tel: tel,
+                password: pass,
+                privateKey: '00'
+            }
+        })
+
+
+        let user = {
             username: pseudo,
             email: mail,
             tel: tel,
             password: pass,
-            privateKey: '00'
-        }})
+            privatekey: '00',
+            repertoire: []
+
+        }
+
+        let donnees = JSON.stringify(user)
+        fs.writeFileSync('user.json', donnees)
     }
 
     const testConnecte = () => {
@@ -25,7 +44,7 @@ const Sign = () => {
 
     const signIn = (testPass) => {
         const assert = testPass === password;
-        dispatch({type: "SET_PASSWORD_ACCEPTED", payload: {passwordAccepted: assert }})
+        dispatch({ type: "SET_PASSWORD_ACCEPTED", payload: { passwordAccepted: assert } })
     }
 
     return (
@@ -34,7 +53,7 @@ const Sign = () => {
             <div className="container" id="container">
                 <div className="form-container sign-up-container">
                     <form action="#">
-                        { testConnecte() ?
+                        {testConnecte() ?
                             <><h1>Cr&#xE9;er un compte</h1>
                                 <input type="text" id="pseudo" placeholder="Pseudo" />
                                 <input type="email" id="email" placeholder="Email" />
@@ -55,12 +74,12 @@ const Sign = () => {
                 </div>
                 <div className="form-container sign-in-container">
                     <form action="#">
-                        { !testConnecte() ?
-                        <>
-                        <h1>Connectez vous {username}</h1>
-                        <input type="password" placeholder="Mot de passe" id="password_in" />
-                        <Link className="sign_link" to="/verify" onClick={() => signIn(document.getElementById("password_in").value)}> Connectez vous </Link>                        </> : 
-                        <h1>Veuillez vous inscrire</h1>
+                        {!testConnecte() ?
+                            <>
+                                <h1>Connectez vous {username}</h1>
+                                <input type="password" placeholder="Mot de passe" id="password_in" />
+                                <Link className="sign_link" to="/verify" onClick={() => signIn(document.getElementById("password_in").value)}> Connectez vous </Link>                        </> :
+                            <h1>Veuillez vous inscrire</h1>
                         }
                     </form>
                 </div>
@@ -80,7 +99,7 @@ const Sign = () => {
                 </div>
             </div>
         </div>
-        
+
     )
 }
 
