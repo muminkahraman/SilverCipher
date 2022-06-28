@@ -5,6 +5,9 @@
     box-sizing: border-box;
 }
 
+main {
+    height: 95%;
+}
 
 .sign_body {
     background: #580aa5;
@@ -438,6 +441,9 @@ code {
 
 .content-message {
     border: solid red 1px;
+    height: 70%;
+    width: 95%;
+    align-self: center;
 }
 
 .content-message-area {
@@ -454,4 +460,11 @@ code {
     padding: 5px;
     border-radius: 5px;
     text-align: center;
+}
+
+.div-bouton {
+    display: flex;
+    flex-direction: row-reverse;
+    padding-right: 20px;
+    padding-top: 5px;
 }
