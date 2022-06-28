@@ -12,33 +12,63 @@ import Envoi from "./envoi"
 import New from "./new"
 import paramIcon from '../logos/param.svg'
 import Logo from '../logos/Logo.svg'
+import { useStateValue } from '../state/StateProvider';
 
-const script = require('../script')
+
+
+
 
 export default function Menu() {
 
+  const [{ username }] = useStateValue();
+  
+  const colorNav = (paramId) => {
+
+    const recept = document.getElementById('recept')
+    if (recept) {
+      recept.style.backgroundColor = '#580aa5';
+      recept.style.color = 'white';
+    }
+    const envoi = document.getElementById('envoi')
+    if (envoi) {
+      envoi.style.backgroundColor = '#580aa5';
+      envoi.style.color = 'white';
+    }
+    const brouillon = document.getElementById('brouillon')
+    if (brouillon) {
+      brouillon.style.backgroundColor = '#580aa5';
+      brouillon.style.color = 'white';
+    }
+    const blank = document.getElementById(paramId)
+    if (blank) {
+      blank.style.backgroundColor = 'white';
+      blank.style.color = 'black';
+    }
+
+  }
+
   return (
+
     <>
-    
       <div id="root" className='root'>
         <Router>
-            <img className="logo" src={Logo} alt='' />
-            <div className='name'> Seb </div>
-            <Link className='param' to="/menu/params">
-                <img className="paramIcon" src={paramIcon} alt='' onClick={ () => script.colorNav() }/>
-            </Link>
-            <Navbar className="navbar" />
-            <div className='main'>
-                <main>
-                    <Route exact path="/menu/recept" component={Recept} />
-                    <Route path="/menu/params" component={Params} />
-                    <Route path="/menu/envoi" component={Envoi} />
-                    <Route path="/menu/brouillon" component={Brouillon} />
-                    <Route path="/menu/new" component={New} />
-                </main>
-            </div>
+          <img className="logo" src={Logo} alt='' />
+          <div className='name'> {username} </div>
+          <Link className='param' to="/menu/params">
+            <img className="paramIcon" src={paramIcon} alt='' onClick={() => colorNav()} />
+          </Link>
+          <Navbar className="navbar" />
+          <div className='main'>
+            <main>
+              <Route exact path="/menu/recept" component={Recept} />
+              <Route path="/menu/params" component={Params} />
+              <Route path="/menu/envoi" component={Envoi} />
+              <Route path="/menu/brouillon" component={Brouillon} />
+              <Route path="/menu/new" component={New} />
+            </main>
+          </div>
         </Router>
-    </div>
+      </div>
     </>
   )
 }

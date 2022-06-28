@@ -1,19 +1,19 @@
-
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+
 
 * {
     box-sizing: border-box;
 }
 
-body {
-    background: #f6f5f7;
+
+.sign_body {
+    background: #580aa5;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     font-family: 'Montserrat', sans-serif;
     height: 100vh;
-    margin: -20px 0 50px;
 }
 
 h1 {
@@ -24,6 +24,7 @@ h1 {
 h2 {
     text-align: center;
 }
+
 
 p {
     font-size: 14px;
@@ -37,17 +38,55 @@ span {
     font-size: 12px;
 }
 
-a {
-    color: #333;
-    font-size: 14px;
+.sign_link {
+    border-radius: 20px;
+    border: 1px solid rgb(7, 7, 111);
+    background-color: white;
+    color: rgb(7, 7, 111);
+    font-size: 12px;
+    font-weight: bold;
+    padding: 12px 45px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: transform 80ms ease-in;
     text-decoration: none;
-    margin: 15px 0;
+}
+
+.verifButton {
+    color: white;
+    background-color: rgb(41, 17, 108);
+    text-decoration: none;
+    width: 40%;
+    align-self: center;
+    text-align: center;
+    padding: 2%;
+    border-radius: 10px;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25),
+        0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.verifContain {
+    background-color: #fff;
+    text-decoration: none;
+    height: 30%;
+    width: 60%;
+    text-align: center;
+    position: absolute;
+    left: 20%;
+    top: 35%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 20px;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25),
+        0 10px 10px rgba(0, 0, 0, 0.22);
 }
 
 button {
     border-radius: 20px;
     border: 1px solid rgb(7, 7, 111);
-    background-color: rgb(7, 7, 111);;
+    background-color: rgb(7, 7, 111);
+    ;
     color: #FFFFFF;
     font-size: 12px;
     font-weight: bold;
@@ -70,23 +109,23 @@ button.ghost {
     border-color: #FFFFFF;
 }
 
+
 form {
     background-color: #FFFFFF;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
     flex-direction: column;
-    padding: 0 50px;
-    height: 100%;
+    height: 90%;
     text-align: center;
 }
 
 input {
     background-color: #eee;
     border: none;
-    padding: 12px 15px;
-    margin: 8px 0;
-    width: 100%;
+    width: 80%;
+    font-size: larger;
+    padding: 2%;
 }
 
 .container {
@@ -96,8 +135,7 @@ input {
         0 10px 10px rgba(0, 0, 0, 0.22);
     position: relative;
     overflow: hidden;
-    width: 768px;
-    max-width: 100%;
+    width: 80%;
     min-height: 480px;
 }
 
@@ -117,6 +155,8 @@ input {
 .container.right-panel-active .sign-in-container {
     transform: translateX(100%);
 }
+
+
 
 .sign-up-container {
     left: 0;
@@ -214,6 +254,7 @@ input {
     transform: translateX(20%);
 }
 
+
 .social-container {
     margin: 20px 0;
 }
@@ -255,107 +296,116 @@ footer a {
 }
 
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: rgb(7, 7, 111);
-  height: 100vh;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+        "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: rgb(7, 7, 111);
+    height: 100vh;
 }
 
 #root {
-  height: 100%;
+    height: 100%;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+        monospace;
 }
 
 .root {
-  display: grid;
-  grid-template-rows: 1fr 6fr;
-  grid-template-columns: 2fr 5fr 2fr 1fr;
-  height: fit-content;
+    display: grid;
+    grid-template-rows: 1fr 6fr;
+    grid-template-columns: 3fr 6fr 2fr 1fr;
+    height: fit-content;
 }
 
 .logo {
-  grid-column: 1;
-  grid-row: 1;
-  align-self: center;
-  color: white;
-  width: auto;
-  height: 80%;
-  margin-left: 10%;;
+    grid-column: 1;
+    grid-row: 1;
+    align-self: center;
+    color: white;
+    width: auto;
+    height: 80%;
 }
 
 .name {
-  grid-column: 3;
-  grid-row: 1;
-  align-self: center;
-  color: white;
-  font-size:larger;
+    grid-column: 3;
+    grid-row: 1;
+    align-self: center;
+    color: white;
+    font-size: larger;
 }
 
 .param {
-  grid-column: 4;
-  grid-row: 1;
-  align-self: center;
-  color: white;
-  text-align: center;
+    grid-column: 4;
+    grid-row: 1;
+    align-self: center;
+    color: white;
+    text-align: center;
 }
 
-.navbar{
-  grid-column: 1;
-  grid-row: 2/3;
-  background-color: grey;
+.navbar {
+    grid-column: 1;
+    grid-row: 2/3;
+    background-color: #580aa5;
+    width: 100%;
 }
 
 .main {
-  grid-column: 2/5;
-  grid-row: 2;
-  background-color: white;
+    grid-column: 2/5;
+    grid-row: 2;
+    background-color: white;
+    padding-left: 10px;
+    padding-top: 15px;
 }
 
 .navItems {
-  display: grid;
-  grid-template-rows: repeat(8, 1fr);
-  grid-template-columns: 1fr;
-  grid-auto-flow: column;
-  height:100%;
+    display: grid;
+    grid-template-rows: repeat(8, 1fr);
+    grid-template-columns: 1fr;
+    grid-auto-flow: column;
+    height: 100%;
+    width: 100%;
 }
 
-.navItems > * {
-  text-decoration: none;
-  color: black;
-  height: 100%;
+.navItems>* {
+    text-decoration: none;
+    color: white;
+    height: 100%;
+    width: 100%;
+    text-align: center;
 }
-.navItems > *:not(:first-child):not(:last-child) {
-  border-top: solid black 2px;
-  height: 100%;
+
+.navItems>*:not(:first-child):not(:last-child) {
+    border-top: solid black 2px;
+    height: 100%;
 }
-.navItems > *:first-child {
-  background-color: white;
+
+.navItems>*:first-child {
+    color: black;
+    background-color: white;
 }
 
 .new {
-  grid-row: 8;
-  background-color: rgb(7, 7, 111);
-  color: white;
-  border-radius: 20%;
-  margin: 5%;
-  align-self: center;
-  text-align: center;
-  height: auto;
+    grid-row: 8;
+    background-color: rgb(7, 7, 111);
+    color: white;
+    border-radius: 10px;
+    align-self: center;
+    text-align: center;
+    height: 30px;
+    width: 70%;
+    margin-left: 15%;
 }
 
 .paramIcon {
-  height:30px;
-  width:auto;
-  background-color: white;
-  border-radius: 50%;
+    height: 30px;
+    width: auto;
+    background-color: white;
+    border-radius: 50%;
 }
 
 .new-mess-column {
@@ -387,4 +437,14 @@ code {
     resize: none;
     width: 100%;
     height: 100%;
+}
+.paramItem {
+    text-decoration: none;
+    color: white;
+    margin: 10px;
+    background-color: #490093;
+    width: max-content;
+    padding: 5px;
+    border-radius: 5px;
+    text-align: center;
 }
