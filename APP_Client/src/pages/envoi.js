@@ -1,6 +1,5 @@
 import React from "react"
 import "../App.css"
-//const script = require('../script')
 
 const Envoi = () => {
     return (

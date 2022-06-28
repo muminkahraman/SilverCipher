@@ -1,19 +1,18 @@
 import React from "react"
 import "../App.css"
 import { Link } from "react-router-dom"
-
-const script = require('../script')
+import { useStateValue } from '../state/StateProvider';
 
 const Verification = () => {
 
-    const name = script.getName();
+    const [{passwordAccepted, username}] = useStateValue();
 
     return (
         <>
 
-            {script.getPass() ?
+            {passwordAccepted ?
                 <div className="verifContain">
-                    <h2>Bonjour {name}</h2>
+                    <h2>Bonjour {username}</h2>
                     <Link to="/menu/recept" className="verifButton" >Aller au menu</Link>
                 </div>
                 :

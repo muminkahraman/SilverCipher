@@ -1,13 +1,32 @@
 import React from "react"
 import "../App.css"
 import { Link } from "react-router-dom"
-import script from '../script'
+import { useStateValue } from '../state/StateProvider';
 
 const Sign = () => {
 
-    console.log(script.testConnecte())
+    const [{ username, password }, dispatch] = useStateValue();
 
-    //if (script.testConnecte()) {
+
+    const creeUser = (pseudo, mail, tel, pass) => {
+
+        dispatch({type: "SET_USER", payload: {
+            username: pseudo,
+            email: mail,
+            tel: tel,
+            password: pass,
+            privateKey: '00'
+        }})
+    }
+
+    const testConnecte = () => {
+        return username == null;
+    }
+
+    const signIn = (testPass) => {
+        const assert = testPass === password;
+        dispatch({type: "SET_PASSWORD_ACCEPTED", payload: {passwordAccepted: assert }})
+    }
 
     return (
         <div className="sign_body">
@@ -15,7 +34,7 @@ const Sign = () => {
             <div className="container" id="container">
                 <div className="form-container sign-up-container">
                     <form action="#">
-                        {script.testConnecte() ?
+                        { testConnecte() ?
                             <><h1>Cr&#xE9;er un compte</h1>
                                 <input type="text" id="pseudo" placeholder="Pseudo" />
                                 <input type="email" id="email" placeholder="Email" />
@@ -23,7 +42,7 @@ const Sign = () => {
                                 <input type="password" id="password_up" placeholder="Mot de passe" />
 
                                 <Link className="sign_link" to="/menu/recept" onClick={() => {
-                                    script.signUp(
+                                    creeUser(
                                         document.getElementById("pseudo").value,
                                         document.getElementById("email").value,
                                         document.getElementById("tel").value,
@@ -36,11 +55,11 @@ const Sign = () => {
                 </div>
                 <div className="form-container sign-in-container">
                     <form action="#">
-                        { !script.testConnecte() ?
+                        { !testConnecte() ?
                         <>
-                        <h1>Connectez vous</h1>
+                        <h1>Connectez vous {username}</h1>
                         <input type="password" placeholder="Mot de passe" id="password_in" />
-                        <Link className="sign_link" to="/verify" onClick={() => script.signIn(document.getElementById("password_in").value)}> Connectez vous </Link>                        </> : 
+                        <Link className="sign_link" to="/verify" onClick={() => signIn(document.getElementById("password_in").value)}> Connectez vous </Link>                        </> : 
                         <h1>Veuillez vous inscrire</h1>
                         }
                     </form>

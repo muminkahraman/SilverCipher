@@ -43,7 +43,6 @@ app.on("window-all-closed", () => {
 });
 
 ipcMain.on("test", () => {
-    
 })
 
 app.on("activate", () => {
