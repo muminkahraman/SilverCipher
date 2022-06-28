@@ -9,7 +9,7 @@ const New = () => {
                     TO :
                 </div>
                 <div>
-                    <input type="text" id="to" placeholder="pseudo du destinataire" />
+                    <input className="new_input" type="text" id="to" placeholder="pseudo du destinataire" />
                 </div>
             </div>
             <div className="line-to">
@@ -17,7 +17,7 @@ const New = () => {
                     Attachement :
                 </div>
                 <div>
-                    <input type="file" id="attachement" placeholder="Attachement" />
+                    <input className="new_input" type="file" id="attachement" placeholder="Attachement" />
                 </div>
             </div>
             <div className="content-message">

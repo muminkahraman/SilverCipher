@@ -411,14 +411,17 @@ code {
 .new-mess-column {
     display: flex;
     flex-direction: column;
-    border: solid black 2px;
     height: 100%;
+    width: 98%;
+    background-color: rgb(208, 208, 208);
 }
 
 .line-to {
     display: flex;
     flex-direction: row;
-    height: 100%;
+    padding: 5px;
+    font-size: 80%;
+    width: 100%;
 }
 
 .labeltext {
@@ -427,6 +430,10 @@ code {
     align-items: center;
     justify-content: flex-end;
     padding-right: 10px;
+}
+
+.new_input{
+    width:max-content;
 }
 
 .content-message {

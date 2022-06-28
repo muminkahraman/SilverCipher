@@ -1,21 +1,20 @@
 const app = window.require('electron').remote
 const fs = app.require('fs')
 
-if(!fs.existsSync('user.json')){
+if(!fs.existsSync('./src/state/user.json')){
   let user = {
     username: null,
     email: null,
     tel: null,
     password: null,
-    privatekey: null,
     repertoire: []
 
   }
 let donnees = JSON.stringify(user)
-fs.writeFileSync('user.json', donnees)
+fs.writeFileSync('./src/state/user.json', donnees)
 }
 
-let fichier = fs.readFileSync('user.json')
+let fichier = fs.readFileSync('./src/state/user.json')
 
 
 export const initialState = JSON.parse(fichier);
@@ -52,6 +51,11 @@ function reducer(state, action) {
       }
     let donnees = JSON.stringify(user)
     fs.writeFileSync('user.json', donnees)
+
+    fs.unlinkSync('./keys/public.pem')
+    fs.unlinkSync('./keys/private.pem')
+
+
       return {
         ...state,
         username: null,

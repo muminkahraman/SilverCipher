@@ -5,13 +5,39 @@ import { useStateValue } from '../state/StateProvider';
 
 const app = window.require('electron').remote
 const fs = app.require('fs')
+const crypto = app.require('crypto')
+const axios = app.require("axios");
+const FormData = app.require('form-data');
+
 
 const Sign = () => {
 
     const [{ username, password }, dispatch] = useStateValue();
 
+    const genRsa = () => {
+        let { publicKey, privateKey } = crypto.generateKeyPairSync("rsa", {
+            // The standard secure default length for RSA keys is 2048 bits
+            modulusLength: 2048,
+        });
+    
+        const exportedPublicKeyBuffer = publicKey.export({
+            type: "pkcs1",
+            format: "pem",
+        });
+        fs.writeFileSync("./keys/public.pem", exportedPublicKeyBuffer, {
+            encoding: "utf-8",
+        });
+    
+        const exportedPrivateKeyBuffer = privateKey.export({
+            type: "pkcs1",
+            format: "pem",
+        });
+        fs.writeFileSync("./keys/private.pem", exportedPrivateKeyBuffer, {
+            encoding: "utf-8",
+        });
+    };
 
-    const creeUser = (pseudo, mail, tel, pass) => {
+    const creeUser = async (pseudo, mail, tel, pass) => {
 
         dispatch({
             type: "SET_USER", payload: {
@@ -19,7 +45,6 @@ const Sign = () => {
                 email: mail,
                 tel: tel,
                 password: pass,
-                privateKey: '00'
             }
         })
 
@@ -29,13 +54,44 @@ const Sign = () => {
             email: mail,
             tel: tel,
             password: pass,
-            privatekey: '00',
             repertoire: []
 
         }
 
         let donnees = JSON.stringify(user)
-        fs.writeFileSync('user.json', donnees)
+        fs.writeFileSync('./src/state/user.json', donnees)
+
+        let randomString1 = crypto.randomBytes(16).toString("hex");
+        console.log(randomString1);
+
+        axios
+            .post("http://localhost:3001/api/user", {
+                pseudo: pseudo,
+                mail: mail,
+                tel: tel,
+                cle_publique: randomString1,
+                path_cert: "path_cert",
+            })
+            .then((response) => {
+                console.log(response.data);
+            });
+        genRsa(randomString1);
+        
+        let form = new FormData();
+        form.append(
+            "file",
+            fs.createReadStream("./keys/private.pem"),
+            randomString1 + ".pem"
+        );
+        await axios
+            .post("http://localhost:3001/api/upload/pub_key", form, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            })
+            .then((response) => {
+                console.log(response.data);
+            });
     }
 
     const testConnecte = () => {
