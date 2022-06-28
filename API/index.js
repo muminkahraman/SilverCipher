@@ -18,17 +18,31 @@ const db = mysql.createConnection({
     database: 'silver_cipher'
 });
 
-app.post("/api/upload", async (req, res) => {
+app.post("/api/upload/pub_key", async (req, res) => {
     if (!req.files) {
         return res.status(400).send('No files were uploaded.');
     }
 
     const file =  req.files.file;
     const filename = file.name;
-    const size = file.data.length;
-    const extension = path.extname(filename);
 
     const url = "/silver-cipher/data/public_keys/" + filename;
+    await util.promisify(file.mv)(".public" + url);
+    res.json({
+        message: "File uploaded successfully",
+        url: url,
+    })
+});
+
+app.post("/api/upload/sym_key", async (req, res) => {
+    if (!req.files) {
+        return res.status(400).send('No files were uploaded.');
+    }
+
+    const file =  req.files.file;
+    const filename = file.name;
+
+    const url = "/silver-cipher/data/symetric_key/" + filename;
     await util.promisify(file.mv)(".public" + url);
     res.json({
         message: "File uploaded successfully",

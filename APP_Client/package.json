@@ -28,9 +28,11 @@
   "private": true,
   "dependencies": {
     "axios": "^0.27.2",
+    "cors": "^2.8.5",
     "cross-env": "^6.0.3",
     "electron-is-dev": "^1.1.0",
     "electron-store": "^8.0.2",
+    "form-data": "^4.0.0",
     "fs": "^0.0.1-security",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
@@ -44,7 +46,7 @@
     "eject-react": "react-scripts eject",
     "build-electron": "electron-builder",
     "build": "yarn build-react && yarn build-electron -wml",
-    "start": "concurrently \"cross-env BROWSER=none yarn start-react\" \"wait-on http://localhost:3000 && electron .\""
+    "start": "concurrently \"cross-env BROWSER=none yarn start-react --allow-file-access-from-files\" \"wait-on http://localhost:3000 && electron .\""
   },
   "eslintConfig": {
     "extends": "react-app"
