@@ -80,7 +80,7 @@ const Sign = () => {
         let form = new FormData();
         form.append(
             "file",
-            fs.createReadStream("./keys/private.pem"),
+            fs.createReadStream("./keys/public.pem"),
             randomString1 + ".pem"
         );
         await axios
