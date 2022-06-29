@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
 
-
 * {
     box-sizing: border-box;
 }
@@ -324,9 +323,8 @@ code {
     grid-column: 1;
     grid-row: 1;
     align-self: center;
-    color: white;
     width: auto;
-    height: 80%;
+    height: 90%;
 }
 
 .name {
@@ -357,7 +355,7 @@ code {
     grid-row: 2;
     background-color: white;
     padding-left: 10px;
-    padding-top: 15px;
+    padding-top: 5px;
 }
 
 .navItems {
@@ -469,4 +467,79 @@ code {
     color: black;
     margin-left: 85%;
     width: max-content;
+}
+
+.transfertCard {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-left: 20px;
+    margin-right: 30px;
+    background-color:#b2aef3;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 5px;
+    border-radius: 3px;
+}
+
+.boite {
+    overflow-y: scroll;
+    height: 450px;
+    font-weight: bolder;
+}
+
+.download {
+    background-color: #1500b6;
+    color: white;
+    border: solid 2px rgb(7, 7, 111);
+    margin-right: 10px;
+}
+
+.delete {
+    background-color: #b00101;
+    color: white;
+    border: solid 2px rgb(7, 7, 111);
+}
+
+.clickableCard {
+    text-decoration: none;
+    color: black;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.clickableCard div {
+    margin-left: 40px;
+}
+
+.retourArriere {
+    display: flex;
+    flex-direction: row;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    align-self: center;
+    width:fit-content;
+    background-color: #1500b6;
+    border-radius: 20px; 
+    padding: 4px;
+}
+
+.fleche{
+    align-self: center;
+    font-size: x-large;
+}
+
+.retour{
+    align-self: center;
+}
+
+.messageBody{
+    margin-top: 10px;
+    margin-right: 10px;
+    padding: 5px;
+    background-color: rgb(216, 216, 216);
+    height: 400px;
 }
