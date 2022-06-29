@@ -124,19 +124,23 @@ const New = () => {
     return (
         <div className="new-mess-column">
             <div className="line-to">
-                <div className="labeltext">TO :</div>
+                <div className="labeltext">
+                    &#192; :
+                </div>
                 <div>
                     <input
                         className="new_input"
                         type="text"
                         id="to"
-                        placeholder="pseudo du destinataire"
+                        placeholder="Destinataire"
                         onChange={(e) => setDest(e.target.value)}
                     />
                 </div>
             </div>
             <div className="line-to">
-                <div className="labeltext">Attachement :</div>
+                <div className="labeltext">
+                    Pi&#232;ce jointe :
+                </div>
                 <div>
                     <input
                         className="new_input"
@@ -156,7 +160,7 @@ const New = () => {
                     placeholder="Votre message"
                 />
             </div>
-            <div className="div-bouton">
+            <div className="new-bouton">
                 <button
                     className="button_envoyer"
                     onClick={() => sendMessage(file)}
