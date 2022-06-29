@@ -6,7 +6,7 @@ import { useStateValue } from '../../state/StateProvider';
 const app = window.require('electron').remote;
 const axios = app.require('axios');
 
-const Transfer = ({ transfer }) => {
+const Transfer = ({ sent }) => {
 
     const [{ }, dispatch] = useStateValue();
 
@@ -14,8 +14,8 @@ const Transfer = ({ transfer }) => {
         dispatch({ type: "SET_MESSAGE", payload: { message: 'Salut' } })
     }
 
-    if (transfer.date) {
-        var dateTotale = transfer.date.split('T');
+    if (sent.date) {
+        var dateTotale = sent.date.split('T');
         var date = dateTotale[0];
         var horairereTotal = dateTotale[1].split('.');
         var horaire = horairereTotal[0].split(':')
@@ -23,7 +23,7 @@ const Transfer = ({ transfer }) => {
 
         var trueHour = heure + ':' + horaire[1] + ':' + horaire[2]
         const deleteTransfer = async () => {
-            await axios.post("http://localhost:3001/api/transferDeleteTest", { id: transfer.idTransfer }).then((response) => {
+            await axios.post("http://localhost:3001/api/transferDeleteTest", { id: sent.idTransfer }).then((response) => {
                 console.log(response.data);
             });
         }
@@ -32,7 +32,7 @@ const Transfer = ({ transfer }) => {
 
             <div className="transfertCard">
                 <NavLink className="clickableCard" to="/menu/sentmessage" onClick={() => updateMessage()}>
-                    <div>{transfer.pseudo}</div>
+                    <div>{sent.pseudo}</div>
                     <div>{date}</div>
                     <div>{trueHour}</div>
                 </NavLink>

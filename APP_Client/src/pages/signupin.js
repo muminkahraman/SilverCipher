@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useState} from "react"
 import "../App.css"
 import { Link } from "react-router-dom"
 import { useStateValue } from '../state/StateProvider';
@@ -12,6 +12,16 @@ const FormData = app.require('form-data');
 
 const Sign = () => {
 
+    const isNum = (val) => {
+        return !isNaN(val)
+    }
+
+    const [pseudo, setPseudo] = useState('');
+    const [email, setEmail] = useState('');
+    const [tel, setTel] = useState('');
+    const [pass, setPass] = useState('');
+
+
     const [{ username, password }, dispatch] = useStateValue();
 
     const genRsa = () => {
@@ -19,7 +29,7 @@ const Sign = () => {
             // The standard secure default length for RSA keys is 2048 bits
             modulusLength: 2048,
         });
-    
+
         const exportedPublicKeyBuffer = publicKey.export({
             type: "pkcs1",
             format: "pem",
@@ -27,7 +37,7 @@ const Sign = () => {
         fs.writeFileSync("./keys/public.pem", exportedPublicKeyBuffer, {
             encoding: "utf-8",
         });
-    
+
         const exportedPrivateKeyBuffer = privateKey.export({
             type: "pkcs1",
             format: "pem",
@@ -44,7 +54,8 @@ const Sign = () => {
                 username: pseudo,
                 email: mail,
                 tel: tel,
-                password: pass            }
+                password: pass
+            }
         })
 
 
@@ -76,7 +87,7 @@ const Sign = () => {
                 console.log(response.data);
             });
         genRsa(randomString1);
-        
+
         let form = new FormData();
         form.append(
             "file",
@@ -103,46 +114,42 @@ const Sign = () => {
         dispatch({ type: "SET_PASSWORD_ACCEPTED", payload: { passwordAccepted: assert } })
     }
 
-    const destinataire = (pseudo) => {
-        console.log(pseudo);
-        axios.get("http://localhost:3001/api/user", 
-            { params: {
-                pseudo: "ludo"
-            }})
-            .then((res) => {
-                console.log(res.data);
-            });
-    };
-    
-    destinataire("ludo");
-
     return (
         <div className="sign_body">
             <br></br>
             <div className="container" id="container">
                 <div className="form-container sign-up-container">
-                    <form action="#">
+                    <form>
                         {testConnecte() ?
                             <><h1>Cr&#xE9;er un compte</h1>
-                                <input type="text" id="pseudo" placeholder="Pseudo" />
-                                <input type="email" id="email" placeholder="Email" />
-                                <input type="tel" id="tel" placeholder="T&#xE9;l&#xE9;phone" />
-                                <input type="password" id="password_up" placeholder="Mot de passe" />
+                                <input type="text" id="pseudo" placeholder="Pseudo" onChange={(e) => setPseudo(e.target.value)} />
+                                <input type="email" id="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)}/>
+                                <input type="tel" id="tel" placeholder="T&#xE9;l&#xE9;phone" onChange={(e) => setTel(e.target.value)}/>
+                                <input type="password" id="password_up" placeholder="Mot de passe" onChange={(e) => setPass(e.target.value)}/>
 
-                                <Link className="sign_link" to="/menu/recept" onClick={() => {
-                                    creeUser(
-                                        document.getElementById("pseudo").value,
-                                        document.getElementById("email").value,
-                                        document.getElementById("tel").value,
-                                        document.getElementById("password_up").value)
-                                }}> Inscrivez vous </Link>
+                                {(  isNum(tel)
+                                    && (tel.length === 10)
+                                    && (email.indexOf('@') !== -1)
+                                    && (pseudo.value !== "")
+                                )
+                                    ?
+                                    <Link className="sign_link" to="/menu/recept" onClick={() => {
+                                        creeUser(
+                                            pseudo,
+                                            email,
+                                            tel,
+                                            pass)
+                                    }}> Inscrivez vous </Link>
+                                    : <h1>Formulaire pas bon : {tel.length}</h1>
+                                }
+
                             </> :
                             <h1>Vous &ecirc;tes d&#xE9;j&#xE0; inscrits</h1>}
 
                     </form>
                 </div>
                 <div className="form-container sign-in-container">
-                    <form action="#">
+                    <form>
                         {!testConnecte() ?
                             <>
                                 <h1>Connectez vous {username}</h1>

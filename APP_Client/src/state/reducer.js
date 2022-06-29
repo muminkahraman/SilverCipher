@@ -51,11 +51,13 @@ function reducer(state, action) {
       }
 
       let donnees = JSON.stringify(user)
-      fs.writeFileSync('user.json', donnees)
 
+      console.log(fs)
+
+      fs.writeFileSync('./src/state/user.json', donnees)
+      
       fs.unlinkSync('./keys/public.pem')
       fs.unlinkSync('./keys/private.pem')
-
 
       return {
         ...state,

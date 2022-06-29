@@ -25,8 +25,8 @@ function Envoi() {
     return (
         <>
             <div className="boite">
-                {data.map((transfer) => (
-                    <Sent key={transfer.idTransfer} transfer={transfer} />
+                {data.map((sent, index) => (
+                    <Sent key={index} sent={sent} />
                 ))}
             </div>
         </>
