@@ -6,7 +6,6 @@ import { useStateValue } from "../state/StateProvider";
 const app = window.require("electron").remote;
 const fs = app.require("fs");
 const crypto = app.require("crypto");
-const { Readable } = app.require("stream");
 const http = app.require("http");
 const FormData = app.require("form-data");
 const Axios = app.require("axios");
@@ -14,12 +13,13 @@ const Axios = app.require("axios");
 const New = () => {
     const [file, setFile] = useState(null);
     const [dest, setDest] = useState(null);
-    const [{ username, password }, dispatch] = useStateValue();
-    const [idDest, setIdDest] = useState(null);
+    const { username } = useStateValue()[0];
+    var idDest;
 
-    const sendMessage = () => {
+    const sendMessage = async () => {
         console.log(dest);
-        Axios.post("http://localhost:3001/api/userbypseudo", {
+
+        const promise = Axios.post("http://localhost:3001/api/userbypseudo", {
             pseudo: dest,
         }).then((res) => {
             console.log(res.data);
@@ -27,7 +27,9 @@ const New = () => {
                 "http://localhost:3001/silver-cipher/data/public_keys/" +
                 res.data[0].cle_publique +
                 ".pem";
-            setIdDest(res.data[0].idUser);
+
+            
+
             http.get(url, (result) => {
                 // Image will be stored at this path
                 const path = `./temp/cle_destinataire.pem`;
@@ -38,7 +40,12 @@ const New = () => {
                     console.log("Download Completed");
                 });
             });
+            return res.data[0].idUser;
         });
+
+        idDest = await promise;
+        console.log(idDest);
+
         const publicKey = Buffer.from(
             fs.readFileSync("./temp/cle_destinataire.pem", {
                 encoding: "utf-8",
