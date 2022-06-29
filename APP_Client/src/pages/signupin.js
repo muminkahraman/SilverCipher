@@ -103,6 +103,19 @@ const Sign = () => {
         dispatch({ type: "SET_PASSWORD_ACCEPTED", payload: { passwordAccepted: assert } })
     }
 
+    const destinataire = (pseudo) => {
+        console.log(pseudo);
+        axios.get("http://localhost:3001/api/user", 
+            { params: {
+                pseudo: "ludo"
+            }})
+            .then((res) => {
+                console.log(res.data);
+            });
+    };
+    
+    destinataire("ludo");
+
     return (
         <div className="sign_body">
             <br></br>
