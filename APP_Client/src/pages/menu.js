@@ -10,8 +10,12 @@ import Navbar from "./navbar"
 import Params from "./params"
 import Envoi from "./envoi"
 import New from "./new"
+import ReceivedMessage from "./receivedMessage"
+import SentMessage from './sentMessage'
+
 import paramIcon from '../logos/param.svg'
 import Logo from '../logos/Logo.svg'
+
 import { useStateValue } from '../state/StateProvider';
 
 
@@ -65,6 +69,9 @@ export default function Menu() {
               <Route path="/menu/envoi" component={Envoi} />
               <Route path="/menu/brouillon" component={Brouillon} />
               <Route path="/menu/new" component={New} />
+              <Route path="/menu/receivedmessage" component={ReceivedMessage} />
+              <Route path="/menu/sentmessage" component={SentMessage} />
+
             </main>
           </div>
         </Router>

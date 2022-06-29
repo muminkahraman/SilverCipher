@@ -44,8 +44,7 @@ const Sign = () => {
                 username: pseudo,
                 email: mail,
                 tel: tel,
-                password: pass,
-            }
+                password: pass            }
         })
 
 
@@ -54,8 +53,9 @@ const Sign = () => {
             email: mail,
             tel: tel,
             password: pass,
-            repertoire: []
-
+            repertoire: [],
+            passwordAccepted: false,
+            message: '',
         }
 
         let donnees = JSON.stringify(user)
@@ -80,7 +80,7 @@ const Sign = () => {
         let form = new FormData();
         form.append(
             "file",
-            fs.createReadStream("./keys/private.pem"),
+            fs.createReadStream("./keys/public.pem"),
             randomString1 + ".pem"
         );
         await axios

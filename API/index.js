@@ -13,10 +13,10 @@ app.use(fileUpload());
 app.use(express.static(".public/"));
 
 const db = mysql.createConnection({
-    user: "root",
-    host: "18.233.162.213",
-    password: "AWSprojet2020.@",
-    database: "silver_cipher",
+    user: 'root',
+    host: '18.233.162.213',
+    password: 'AWSprojet2020.@',
+    database: 'silver_cipher'
 });
 
 app.post("/api/upload/pub_key", async (req, res) => {
@@ -70,30 +70,28 @@ app.post("/api/upload/enc_key", async (req, res) => {
 
 
 app.get("/api/user/all", (req, res) => {
-    db.query("select * from users", (err, result) => {
-        if (err) {
-            console.log(err);
-        } else {
-            res.send(result);
-        }
-    });
+    db.query('select * from users',
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send(result);
+            }
+        })
 });
 
 app.post("/api/userbypseudo", (req, res) => {
     const pseudo = req.body.pseudo;
-    db.query(
-        "select * from users where pseudo like ?",
-        [pseudo],
+    db.query('select * from users where pseudo like ?', [pseudo],
         (err, result) => {
             if (err) {
                 console.log(err);
-                console.log(1);
+                console.log(1)
             } else {
                 res.send(result);
-                console.log(2);
+                console.log(2)
             }
-        }
-    );
+        })
 });
 
 app.post("/api/user", (req, res) => {
@@ -166,10 +164,22 @@ app.get("/api/transfer/all", (req, res) => {
     });
 });
 
-app.get("/api/transfer/receive", (req, res) => {
-    db.query(
-        "select * from transfer where destinataire = (select idUser from users where pseudo like ?)",
-        [req.body.pseudo],
+app.post('/api/transfer/receive', (req, res) => {
+
+    db.query('select * from transfer where destinataire = (select idUser from users where pseudo like ?)', [req.body.pseudo],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send(result);
+            }
+        }
+    )});
+
+
+app.post('/api/transfer/received', (req, res) => {
+
+    db.query('select idTransfer, date, path_fich_crypt, path_cle_crypt, path_contexte, pseudo from transfer join users on transfer.expediteur = users.idUser where destinataire = (select idUser from users where pseudo like ?)', [req.body.pseudo],
         (err, result) => {
             if (err) {
                 console.log(err);
@@ -180,10 +190,9 @@ app.get("/api/transfer/receive", (req, res) => {
     );
 });
 
-app.get("/api/transfer/sent", (req, res) => {
-    db.query(
-        "select * from transfer where expediteur = (select idUser from users where pseudo like ?)",
-        [req.body.pseudo],
+app.post('/api/transfer/sent', (req, res) => {
+
+    db.query('select idTransfer, date, path_fich_crypt, path_cle_crypt, path_contexte, pseudo from transfer join users on transfer.destinataire = users.idUser where expediteur = (select idUser from users where pseudo like ?)', [req.body.pseudo],
         (err, result) => {
             if (err) {
                 console.log(err);
@@ -194,7 +203,22 @@ app.get("/api/transfer/sent", (req, res) => {
     );
 });
 
-app.post("/api/transfer", (req, res) => {
+/*
+app.post('/api/transfer/sent', (req, res) => {
+
+    db.query('select * from transfer where expediteur = (select idUser from users where pseudo like ?)', [req.body.pseudo],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send(result);
+            }
+        }
+    );
+});
+*/
+
+app.post('/api/transfer', (req, res) => {
     const expediteur = req.body.expediteur;
     const destinataire = req.body.destinataire;
     const pathFichCrypt = req.body.pathFichCrypt;
@@ -214,10 +238,21 @@ app.post("/api/transfer", (req, res) => {
     );
 });
 
-app.delete("/api/user", (req, res) => {
-    db.query(
-        "delete from users where idUser = ?",
-        [req.body.id],
+app.delete('/api/user', (req, res) => {
+
+    db.query('delete from users where idUser = ?', [req.body.id],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send(result);
+            }
+        }
+    );
+});
+
+app.post('/api/transferDeleteTest', (req, res) => {
+    db.query('delete from transfer where idTransfer = ?', [req.body.id],
         (err, result) => {
             if (err) {
                 console.log(err);
