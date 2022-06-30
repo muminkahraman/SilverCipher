@@ -15,42 +15,31 @@ const New = () => {
     const [dest, setDest] = useState(null);
     const { username } = useStateValue()[0];
     var idDest;
+    var result;
+    var url;
 
     const sendMessage = async () => {
-        console.log(dest);
 
         const promise = Axios.post("http://localhost:3001/api/userbypseudo", {
             pseudo: dest,
         }).then((res) => {
-            console.log(res.data);
             let url =
                 "http://localhost:3001/silver-cipher/data/public_keys/" +
                 res.data[0].cle_publique +
                 ".pem";
 
-            
-
-            http.get(url, (result) => {
-                // Image will be stored at this path
-                const path = `./temp/cle_destinataire.pem`;
-                const filePath = fs.createWriteStream(path);
-                result.pipe(filePath);
-                filePath.on("finish", () => {
-                    filePath.close();
-                    console.log("Download Completed");
-                });
-            });
-            return res.data[0].idUser;
+            return [res.data[0].idUser, url];
         });
 
-        idDest = await promise;
-        console.log(idDest);
+        result = await promise;
+        idDest = result[0];
+        url = result[1];
 
-        const publicKey = Buffer.from(
-            fs.readFileSync("./temp/cle_destinataire.pem", {
-                encoding: "utf-8",
-            })
-        );
+
+        console.log(idDest, url);
+
+        const reponse = await fetch(url);
+        var publicKey = await reponse.text(); // .json() is asynchronous and therefore must be awaited
 
         let src = fs.readFileSync(file, { encoding: "hex" });
         let key = crypto.randomBytes(16).toString("hex");

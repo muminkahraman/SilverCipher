@@ -10,13 +10,11 @@
       "category": "Utils",
       "icon": "build/icon.png",
       "packageCategory": "utils",
-      "maintainer": "your name <your email>",
       "asar": true,
       "target": [
         "deb",
         "tar.xz"
-      ],
-      "synopsis": "Basically same as description but shorter"
+      ]
     },
     "win": {
       "icon": "build/icon.png",
