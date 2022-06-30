@@ -48,7 +48,7 @@
     "eject-react": "react-scripts eject",
     "build-electron": "electron-builder",
     "build": "yarn build-react && yarn build-electron -wml",
-    "start": "concurrently \"cross-env BROWSER=none yarn start-react --allow-file-access-from-files\" \"wait-on http://localhost:3000 && electron .\""
+    "start": " yarn && concurrently \"cross-env BROWSER=none yarn start-react --allow-file-access-from-files\" \"wait-on http://localhost:3000 && electron .\""
   },
   "eslintConfig": {
     "extends": "react-app"

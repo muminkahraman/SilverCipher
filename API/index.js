@@ -46,13 +46,30 @@ app.post("/api/upload/enc_file", async (req, res) => {
     const url = "/silver-cipher/data/enc_files/" + filename;
     await util.promisify(file.mv)(".public" + url);
     res.json({
-        message: "File uploaded successfully",
+        message: "File uploaded successfully as "+ filename,
+        url: url,
+    });
+});
+
+app.post("/api/upload/enc_message", async (req, res) => {
+
+    if (!req.files) {
+        return res.status(400).send("No files were uploaded.");
+    }
+
+    const file = req.files.file;
+    const filename = file.name;
+
+    const url = "/silver-cipher/data/enc_message/" + filename;
+    await util.promisify(file.mv)(".public" + url);
+    res.json({
+        message: "Message uploaded successfully as "+filename,
         url: url,
     });
 });
 
 app.post("/api/upload/enc_key", async (req, res) => {
-    console.log(req.files)
+
     if (!req.files) {
         return res.status(400).send("No files were uploaded.");
     }
@@ -63,7 +80,7 @@ app.post("/api/upload/enc_key", async (req, res) => {
     const url = "/silver-cipher/data/enc_keys/" + filename;
     await util.promisify(file.mv)(".public" + url);
     res.json({
-        message: "File uploaded successfully",
+        message: "Key uploaded successfully as "+filename,
         url: url,
     });
 });

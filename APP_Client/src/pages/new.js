@@ -6,19 +6,22 @@ import { useStateValue } from "../state/StateProvider";
 const app = window.require("electron").remote;
 const fs = app.require("fs");
 const crypto = app.require("crypto");
-const http = app.require("http");
 const FormData = app.require("form-data");
 const Axios = app.require("axios");
 
 const New = () => {
     const [file, setFile] = useState(null);
     const [dest, setDest] = useState(null);
+    const [mess, setMess] = useState(null);
+
     const { username } = useStateValue()[0];
     var idDest;
     var result;
     var url;
 
     const sendMessage = async () => {
+
+        console.log(mess)
 
         const promise = Axios.post("http://localhost:3001/api/userbypseudo", {
             pseudo: dest,
@@ -35,26 +38,27 @@ const New = () => {
         idDest = result[0];
         url = result[1];
 
-
-        console.log(idDest, url);
-
         const reponse = await fetch(url);
         var publicKey = await reponse.text(); // .json() is asynchronous and therefore must be awaited
 
         let src = fs.readFileSync(file, { encoding: "hex" });
+
         let key = crypto.randomBytes(16).toString("hex");
-        let namee = crypto.randomBytes(16).toString("hex");
         let algorithm = "aes-256-cbc";
-        console.log(namee);
         let iv = Buffer.from("979843777c873b5a2060c2ad968a20d9", "hex");
-        //let output = fs.createWriteStream("./temp/finceenc");
         let cipher = crypto.createCipheriv(algorithm, key, iv);
+
         let upd = cipher.update(src, "hex", "hex");
-        let output = fs.writeFileSync("./temp/encfile", upd);
-        //src.pipe(cipher).toString("hex").pipe(output);
-        let keyfile = crypto.randomBytes(16).toString("hex");
-        let output2 = fs.writeFileSync("./temp/keyfile", key);
-        //let output2 = fs.writeFileSync("./temp/key", key);
+        fs.writeFileSync("./temp/encfile", upd);
+
+        fs.writeFileSync("./temp/message", mess);
+        let msgFile = fs.readFileSync('./temp/message', { encoding: "hex" });
+        let msgUpd = cipher.update(msgFile, "hex", "hex");
+        console.log(msgUpd)
+        fs.writeFileSync("./temp/encmessage", msgUpd);
+
+
+        fs.writeFileSync("./temp/keyfile", key);
 
         const dataToEncrypt = fs.readFileSync("./temp/keyfile", {
             encoding: "utf-8",
@@ -76,6 +80,7 @@ const New = () => {
 
         let name_enc_file = crypto.randomBytes(16).toString("hex");
         let name_enc_keyfile = crypto.randomBytes(16).toString("hex");
+        let name_enc_mess = crypto.randomBytes(16).toString("hex");
 
         const form_file = new FormData();
         form_file.append(
@@ -89,7 +94,7 @@ const New = () => {
                 "Content-Type": "multipart/form-data",
             },
         }).then((response) => {
-            console.log(response.data);
+            console.log(response.data.message);
         });
 
         let form_key = new FormData();
@@ -98,23 +103,46 @@ const New = () => {
             fs.createReadStream("./temp/enckey"),
             name_enc_keyfile
         );
+
         Axios.post("http://localhost:3001/api/upload/enc_key", form_key, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },
         }).then((response) => {
-            console.log(response.data);
+            console.log(response.data.message);
         });
+
+        
+        let form_mess = new FormData();
+        form_mess.append(
+            "file",
+            fs.createReadStream("./temp/encmessage"),
+            name_enc_mess
+        );
+
+        Axios.post("http://localhost:3001/api/upload/enc_message", form_mess, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        }).then((response) => {
+            console.log(response.data.message);
+        });
+        
+
 
         Axios.post("http://localhost:3001/api/newtransfer", {
             expediteur: username,
             destinataire: idDest,
             pathFichCrypt: name_enc_file,
             pathCleCrypt: name_enc_keyfile,
-            pathCont: "nononononnonnoonn",
-        }).then((response) => {
-            console.log(response.data);
-        });
+            pathCont: name_enc_mess,
+        })
+
+        fs.unlinkSync('./temp/encfile')
+        fs.unlinkSync('./temp/enckey')
+        fs.unlinkSync('./temp/keyfile')
+        fs.unlinkSync('./temp/encmessage')
+        fs.unlinkSync('./temp/message')
     };
 
     return (
@@ -143,7 +171,12 @@ const New = () => {
                         type="file"
                         id="attachement"
                         onChange={(event) => {
+                            if(event.target.files[0] !== undefined){
                             setFile(event.target.files[0].path);
+                            }
+                            else {
+                                //elsecase
+                            }
                         }}
                         placeholder="Attachement"
                     />
@@ -153,6 +186,9 @@ const New = () => {
                 <textarea
                     className="content-message-area"
                     id="content-message-id"
+                    onChange={(e) => {
+                        setMess(e.target.value);
+                    }}
                     placeholder="Votre message"
                 />
             </div>
