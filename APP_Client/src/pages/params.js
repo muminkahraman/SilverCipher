@@ -22,7 +22,7 @@ const Params = () => {
     return (
         <>
             <Link to='/' onClick={() => resetStore()} className="paramItem">
-                Reset Store
+                Supprimer mon compte
             </Link>
             <div onClick={() => testUser()} className="paramItem">
                 Affiche user

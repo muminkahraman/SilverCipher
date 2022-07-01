@@ -31,11 +31,11 @@ const Transfer = ({ sent }) => {
         return (
 
             <div className="transfertCard">
-                <NavLink className="clickableCard" to="/menu/sentmessage" onClick={() => updateMessage()}>
+                <div className="clickableCard">
                     <div>{sent.pseudo}</div>
                     <div>{date}</div>
                     <div>{trueHour}</div>
-                </NavLink>
+                </div>
                 <div>
                     <button className="delete" onClick={() => deleteTransfer()}>X</button>
                 </div>
