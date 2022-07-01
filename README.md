@@ -34,13 +34,20 @@ Certainnes librairies doivent aussi êtres installés. Cependant nous avons mis 
    - .public
      - silver-cipher
        - data
+         - enc_files
+         - enc_keys
+         - enc_message
+         - public_keys
    - *index.js*
    - *package.json*
  - APP_Client
    - Keys
+     - *public.pem*
+     - *private.pem*
    - public
    - src
-   - temp
+     - **pages ....**
+   - temp 
    - *package.json*
  - Documentation
  - *.gitignore*
