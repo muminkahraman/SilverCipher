@@ -140,7 +140,7 @@ const Sign = () => {
                                             tel,
                                             pass)
                                     }}> Inscrivez vous </Link>
-                                    : <h1>Formulaire pas bon : {tel.length}</h1>
+                                    : <h2>Veuillez renseigner correctement tous les champs</h2>
                                 }
 
                             </> :
