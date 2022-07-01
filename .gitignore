@@ -2,3 +2,6 @@ API/node_modules/**
 APP_Client/node_modules/**
 Chiffrement/node_modules/**
 Interface_log/interface_connection/node_modules/**
+
+APP_Client/src/state/user.json
+APP_Client/keys/**

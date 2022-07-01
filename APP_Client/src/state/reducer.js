@@ -1,17 +1,18 @@
 const app = window.require('electron').remote
 const fs = app.require('fs')
 
-if(!fs.existsSync('./src/state/user.json')){
+if (!fs.existsSync('./src/state/user.json')) {
   let user = {
     username: null,
     email: null,
     tel: null,
     password: null,
-    repertoire: []
-
+    repertoire: [],
+    passwordAccepted: false,
+    message: ''
   }
-let donnees = JSON.stringify(user)
-fs.writeFileSync('./src/state/user.json', donnees)
+  let donnees = JSON.stringify(user)
+  fs.writeFileSync('./src/state/user.json', donnees)
 }
 
 let fichier = fs.readFileSync('./src/state/user.json')
@@ -30,7 +31,6 @@ function reducer(state, action) {
         email: action.payload.email,
         tel: action.payload.email,
         password: action.payload.password,
-        privateKey: action.payload.privateKey,
       };
 
     case 'SET_PASSWORD_ACCEPTED':
@@ -45,16 +45,19 @@ function reducer(state, action) {
         email: null,
         tel: null,
         password: null,
-        privatekey: null,
-        repertoire: []
-    
+        repertoire: [],
+        passwordAccepted: false,
+        message: '',
       }
-    let donnees = JSON.stringify(user)
-    fs.writeFileSync('user.json', donnees)
 
-    fs.unlinkSync('./keys/public.pem')
-    fs.unlinkSync('./keys/private.pem')
+      let donnees = JSON.stringify(user)
 
+      console.log(fs)
+
+      fs.writeFileSync('./src/state/user.json', donnees)
+      
+      fs.unlinkSync('./keys/public.pem')
+      fs.unlinkSync('./keys/private.pem')
 
       return {
         ...state,
@@ -62,9 +65,15 @@ function reducer(state, action) {
         email: null,
         tel: null,
         password: null,
-        privateKey: null,
         repertoire: [],
-        passwordAccepted: false      
+        passwordAccepted: false,
+        message: ''
+      };
+
+    case 'SET_MESSAGE':
+      return {
+        ...state,
+        message: action.payload.message
       };
 
     default:

@@ -10,13 +10,11 @@
       "category": "Utils",
       "icon": "build/icon.png",
       "packageCategory": "utils",
-      "maintainer": "your name <your email>",
       "asar": true,
       "target": [
         "deb",
         "tar.xz"
-      ],
-      "synopsis": "Basically same as description but shorter"
+      ]
     },
     "win": {
       "icon": "build/icon.png",
@@ -27,6 +25,10 @@
   "homepage": "./",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.9.3",
+    "@emotion/styled": "^11.9.3",
+    "@mui/material": "^5.8.6",
+    "@mui/x-data-grid": "^5.12.3",
     "axios": "^0.27.2",
     "cors": "^2.8.5",
     "cross-env": "^6.0.3",
@@ -34,8 +36,8 @@
     "electron-store": "^8.0.2",
     "form-data": "^4.0.0",
     "fs": "^0.0.1-security",
-    "react": "^16.11.0",
-    "react-dom": "^16.11.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0"
   },
@@ -46,7 +48,7 @@
     "eject-react": "react-scripts eject",
     "build-electron": "electron-builder",
     "build": "yarn build-react && yarn build-electron -wml",
-    "start": "concurrently \"cross-env BROWSER=none yarn start-react --allow-file-access-from-files\" \"wait-on http://localhost:3000 && electron .\""
+    "start": " yarn && concurrently \"cross-env BROWSER=none yarn start-react --allow-file-access-from-files\" \"wait-on http://localhost:3000 && electron .\""
   },
   "eslintConfig": {
     "extends": "react-app"
