@@ -1,12 +1,12 @@
 # SilverCipher# Silver Cipher (Version1)
 #### Ce projet a été développé par : Cassaigne Antoine, Kahraman Mumin, Leconte Tony, Reynaud Ludovic, Serron Vincent, Thouvenin Sébastien 
 ## Introduction
-Ce projet à pour but de créer une solution de chiffrement de bout en bout. nous utilisons pour cela une méthode de chiffrement avec clé de session. le fichier en lui même est chiffré avec l'algorythme **aes-256-cbc**. le mot de passe est chiffré par un chiffrement asymétrique qu'est le **RSA**.
+Ce projet à pour but de créer une solution de chiffrement de bout en bout. Nous utilisons pour cela une méthode de chiffrement avec clé de session. Le fichier en lui même est chiffré avec l'algorithme **aes-256-cbc**. Le mot de passe est chiffré par un chiffrement asymétrique qu'est le **RSA**.
 ## Prérequis (liste des logiciels prérequit et leur versions...)
 Pour lancer le projet, il faudra d'abord installer certains logiciels : 
  - NodeJS 16.15
 
-Certainnes librairies doivent aussi êtres installés. Cependant nous avons mis en place un utilitaire qui les installe automatiquement avec une seule commande. Pour informations, les librairies en question sont les suivantes.
+Certaines librairies doivent aussi êtres installés. Cependant nous avons mis en place un utilitaire qui les installe automatiquement avec une seule commande. Pour informations, les librairies en question sont les suivantes.
 
  - concurrently : 5.0.0
  - electron : 8.3.0
