@@ -32,6 +32,8 @@ Certainnes librairies doivent aussi êtres installés. Cependant nous avons mis 
 
  - API
    - .public
+     - silver-cipher
+       - data
    - *index.js*
    - *package.json*
  - APP_Client
