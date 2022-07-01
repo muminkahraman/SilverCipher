@@ -463,9 +463,10 @@ code {
 }
 
 .new-bouton {
+    position: relative;
     margin-top: 10px;
     color: black;
-    margin-left: 85%;
+    left: 80%;
     width: max-content;
 }
 

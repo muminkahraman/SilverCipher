@@ -17,7 +17,6 @@ if (!fs.existsSync('./src/state/user.json')) {
 
 let fichier = fs.readFileSync('./src/state/user.json')
 
-
 export const initialState = JSON.parse(fichier);
 
 function reducer(state, action) {
@@ -51,8 +50,6 @@ function reducer(state, action) {
       }
 
       let donnees = JSON.stringify(user)
-
-      console.log(fs)
 
       fs.writeFileSync('./src/state/user.json', donnees)
       

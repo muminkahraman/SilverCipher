@@ -143,6 +143,10 @@ const New = () => {
         fs.unlinkSync('./temp/keyfile')
         fs.unlinkSync('./temp/encmessage')
         fs.unlinkSync('./temp/message')
+
+        setDest('')
+        setFile('')
+        setMess('')
     };
 
     return (

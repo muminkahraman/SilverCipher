@@ -25,7 +25,7 @@ function Recept() {
     <>
       <div className='boite'>
         {
-          data.map((transfer) =><Transfer key={transfer} transfer={transfer} />)
+          data.map((transfer, index) =><Transfer key={index} transfer={transfer} />)
         }
       </div>
     </>
