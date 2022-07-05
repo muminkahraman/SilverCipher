@@ -21,8 +21,6 @@ const New = () => {
 
     const sendMessage = async () => {
 
-        console.log(mess)
-
         const promise = Axios.post("http://localhost:3001/api/userbypseudo", {
             pseudo: dest,
         }).then((res) => {
@@ -41,6 +39,70 @@ const New = () => {
         const reponse = await fetch(url);
         var publicKey = await reponse.text(); // .json() is asynchronous and therefore must be awaited
 
+        let srcFile = fs.readFileSync(file, "hex");
+
+        let key = "6c7e467c8fe130e2d96a37dfb57bd78a";
+        let algorithm = "aes-256-cbc";
+        let iv = Buffer.from("979843777c873b5a2060c2ad968a20d9", "hex");
+        let cipher = crypto.createCipheriv(algorithm, key, iv);
+
+        let updFile = cipher.update(srcFile, "hex", "hex") + cipher.final("hex");
+
+        fs.writeFileSync("./encfile", updFile, { encoding: "hex" });
+
+        let name_enc_file = 'encfile';
+        let name_enc_keyfile = 'enckey';
+        let name_enc_mess = 'encmess';
+
+        const form_file = new FormData();
+        form_file.append(
+            "file",
+            fs.readFileSync("./encfile"),
+            'encfile'
+        );
+
+        Axios.post("http://localhost:3001/api/upload/enc_file", form_file, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        }).then((response) => {
+            console.log(response.data.message);
+        });
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        fs.writeFileSync("./clear_key", key);
+
+        const keyToEncrypt = fs.readFileSync("./clear_key");
+
+        const encryptedData = crypto.publicEncrypt(
+            {
+                key: publicKey,
+                padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
+                oaepHash: "sha256",
+            },
+
+            Buffer.from(keyToEncrypt)
+        );
+
+        fs.writeFileSync("./crypted_key", encryptedData);
+
+        let form_key = new FormData();
+        form_key.append(
+            "file",
+            fs.createReadStream("./crypted_key"),
+            'enckey'
+        );
+
+        Axios.post("http://localhost:3001/api/upload/enc_key", form_key, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        }).then((response) => {
+            console.log(response.data.message);
+        });
+
+        /*
         let src = fs.readFileSync(file, { encoding: "hex" });
 
         let key = crypto.randomBytes(16).toString("hex");
@@ -127,7 +189,7 @@ const New = () => {
         }).then((response) => {
             console.log(response.data.message);
         });
-        
+        */
 
 
         Axios.post("http://localhost:3001/api/newtransfer", {
@@ -138,11 +200,13 @@ const New = () => {
             pathCont: name_enc_mess,
         })
 
+        /*
         fs.unlinkSync('./temp/encfile')
         fs.unlinkSync('./temp/enckey')
         fs.unlinkSync('./temp/keyfile')
         fs.unlinkSync('./temp/encmessage')
         fs.unlinkSync('./temp/message')
+        */
 
         setDest('')
         setFile('')
@@ -175,8 +239,8 @@ const New = () => {
                         type="file"
                         id="attachement"
                         onChange={(event) => {
-                            if(event.target.files[0] !== undefined){
-                            setFile(event.target.files[0].path);
+                            if (event.target.files[0] !== undefined) {
+                                setFile(event.target.files[0].path);
                             }
                             else {
                                 //elsecase
