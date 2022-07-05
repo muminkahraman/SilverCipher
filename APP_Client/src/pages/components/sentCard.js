@@ -23,7 +23,7 @@ const Transfer = ({ sent }) => {
 
         var trueHour = heure + ':' + horaire[1] + ':' + horaire[2]
         const deleteTransfer = async () => {
-            await axios.post("http://localhost:3001/api/transferDeleteTest", { id: sent.idTransfer }).then((response) => {
+            await axios.post("http://18.233.162.213:3001/api/transferDeleteTest", { id: sent.idTransfer }).then((response) => {
                 console.log(response.data);
             });
         }

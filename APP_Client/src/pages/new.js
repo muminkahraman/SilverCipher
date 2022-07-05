@@ -21,11 +21,11 @@ const New = () => {
 
     const sendMessage = async () => {
 
-        const promise = Axios.post("http://localhost:3001/api/userbypseudo", {
+        const promise = Axios.post("http://18.233.162.213:3001/api/userbypseudo", {
             pseudo: dest,
         }).then((res) => {
             let url =
-                "http://localhost:3001/silver-cipher/data/public_keys/" +
+                "http://18.233.162.213:3001/silver-cipher/data/public_keys/" +
                 res.data[0].cle_publique +
                 ".pem";
 
@@ -67,7 +67,7 @@ const New = () => {
             name_enc_file
         );
 
-        Axios.post("http://localhost:3001/api/upload/enc_file", form_file, {
+        Axios.post("http://18.233.162.213:3001/api/upload/enc_file", form_file, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },
@@ -83,7 +83,7 @@ const New = () => {
             name_enc_mess
         );
 
-        Axios.post("http://localhost:3001/api/upload/enc_message", form_mess, {
+        Axios.post("http://18.233.162.213:3001/api/upload/enc_message", form_mess, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },
@@ -117,7 +117,7 @@ const New = () => {
             name_enc_keyfile
         );
 
-        Axios.post("http://localhost:3001/api/upload/enc_key", form_key, {
+        Axios.post("http://18.233.162.213:3001/api/upload/enc_key", form_key, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },
@@ -174,7 +174,7 @@ const New = () => {
             name_enc_file
         );
 
-        Axios.post("http://localhost:3001/api/upload/enc_file", form_file, {
+        Axios.post("http://18.233.162.213:3001/api/upload/enc_file", form_file, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },
@@ -189,7 +189,7 @@ const New = () => {
             name_enc_keyfile
         );
 
-        Axios.post("http://localhost:3001/api/upload/enc_key", form_key, {
+        Axios.post("http://18.233.162.213:3001/api/upload/enc_key", form_key, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },
@@ -205,7 +205,7 @@ const New = () => {
             name_enc_mess
         );
 
-        Axios.post("http://localhost:3001/api/upload/enc_message", form_mess, {
+        Axios.post("http://18.233.162.213:3001/api/upload/enc_message", form_mess, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },
@@ -215,7 +215,7 @@ const New = () => {
         */
 
 
-        Axios.post("http://localhost:3001/api/newtransfer", {
+        Axios.post("http://18.233.162.213:3001/api/newtransfer", {
             expediteur: username,
             destinataire: idDest,
             pathFichCrypt: name_enc_file,
