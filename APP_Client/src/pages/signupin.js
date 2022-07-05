@@ -76,7 +76,7 @@ const Sign = () => {
         console.log(randomString1);
 
         axios
-            .post("http://18.233.162.213:3001/api/user", {
+            .post("http://localhost:3001/api/user", {
                 pseudo: pseudo,
                 mail: mail,
                 tel: tel,
@@ -95,7 +95,7 @@ const Sign = () => {
             randomString1 + ".pem"
         );
         await axios
-            .post("http://18.233.162.213:3001/api/upload/pub_key", form, {
+            .post("http://localhost:3001/api/upload/pub_key", form, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },

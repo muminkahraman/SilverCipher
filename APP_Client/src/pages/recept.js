@@ -13,7 +13,7 @@ function Recept() {
 
   const getData = async () => {
     await axios
-      .post("http://18.233.162.213:3001/api/transfer/received", { pseudo: username })
+      .post("http://localhost:3001/api/transfer/received", { pseudo: username })
       .then((response) => {
         setData(response.data)
       });

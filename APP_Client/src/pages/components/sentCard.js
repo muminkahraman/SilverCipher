@@ -1,18 +1,10 @@
 import React from "react"
 import "../../App.css"
-import { NavLink } from 'react-router-dom';
-import { useStateValue } from '../../state/StateProvider';
 
 const app = window.require('electron').remote;
 const axios = app.require('axios');
 
 const Transfer = ({ sent }) => {
-
-    const [{ }, dispatch] = useStateValue();
-
-    const updateMessage = () => {
-        dispatch({ type: "SET_MESSAGE", payload: { message: 'Salut' } })
-    }
 
     if (sent.date) {
         var dateTotale = sent.date.split('T');
@@ -23,7 +15,7 @@ const Transfer = ({ sent }) => {
 
         var trueHour = heure + ':' + horaire[1] + ':' + horaire[2]
         const deleteTransfer = async () => {
-            await axios.post("http://18.233.162.213:3001/api/transferDeleteTest", { id: sent.idTransfer }).then((response) => {
+            await axios.post("http://localhost:3001/api/transferDeleteTest", { id: sent.idTransfer }).then((response) => {
                 console.log(response.data);
             });
         }

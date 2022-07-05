@@ -12,7 +12,7 @@ function Envoi() {
 
     const getData = async () => {
         await axios
-            .post("http://18.233.162.213:3001/api/transfer/sent", {
+            .post("http://localhost:3001/api/transfer/sent", {
                 pseudo: username,
             })
             .then((response) => {

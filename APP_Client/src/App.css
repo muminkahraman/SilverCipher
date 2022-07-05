@@ -462,6 +462,10 @@ code {
     text-align: center;
 }
 
+.paramBox{
+    margin-top: 10px;
+}
+
 .new-bouton {
     position: relative;
     margin-top: 10px;
@@ -488,6 +492,13 @@ code {
     overflow-y: scroll;
     height: 450px;
     font-weight: bolder;
+}
+
+.verify {
+    background-color: #005a07;
+    color: white;
+    border: solid 2px rgb(0, 56, 8);
+    margin-right: 10px;
 }
 
 .download {

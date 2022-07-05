@@ -1,5 +1,6 @@
 const app = window.require('electron').remote
 const fs = app.require('fs')
+const axios = app.require('axios')
 
 if (!fs.existsSync('./src/state/user.json')) {
   let user = {
@@ -15,7 +16,7 @@ if (!fs.existsSync('./src/state/user.json')) {
   fs.writeFileSync('./src/state/user.json', donnees)
 }
 
-let fichier = fs.readFileSync('./src/state/user.json')
+let fichier = fs.readFileSync('./src/state/user.json').toString()
 
 export const initialState = JSON.parse(fichier);
 
@@ -39,6 +40,14 @@ function reducer(state, action) {
       };
 
     case 'RESET':
+
+      let fichier = fs.readFileSync('./src/state/user.json').toString()
+      let fichierJson = JSON.parse(fichier)
+
+      axios.post('http://localhost:3001/api/delete/user', { pseudo: fichierJson.username }).then((response) => {
+        console.log(response.data.message);
+      });
+
       let user = {
         username: null,
         email: null,
@@ -52,7 +61,7 @@ function reducer(state, action) {
       let donnees = JSON.stringify(user)
 
       fs.writeFileSync('./src/state/user.json', donnees)
-      
+
       fs.unlinkSync('./keys/public.pem')
       fs.unlinkSync('./keys/private.pem')
 
@@ -71,6 +80,12 @@ function reducer(state, action) {
       return {
         ...state,
         message: action.payload.message
+      };
+
+    case 'SET_PASSWORD':
+      return {
+        ...state,
+        password: action.payload.password
       };
 
     default:

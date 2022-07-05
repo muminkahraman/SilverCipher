@@ -15,21 +15,23 @@ const Params = () => {
     }
 
     function resetStore() {
-        dispatch({type:"RESET"})
+        dispatch({ type: "RESET" })
     }
 
-    
+
     return (
         <>
-            <Link to='/' onClick={() => resetStore()} className="paramItem">
-                Supprimer mon compte
-            </Link>
-            <div onClick={() => testUser()} className="paramItem">
-                Affiche user
+            <div className="paramBox">
+                <Link to='/' onClick={() => resetStore()} className="paramItem">
+                    Supprimer mon compte
+                </Link>
+                <div onClick={() => testUser()} className="paramItem">
+                    Affiche user
+                </div>
+                <Link to='/' className="paramItem">
+                    Verouiller
+                </Link>
             </div>
-            <Link to='/' className="paramItem">
-                Verouiller
-            </Link>
         </>
     )
 }

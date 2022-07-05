@@ -21,11 +21,11 @@ const New = () => {
 
     const sendMessage = async () => {
 
-        const promise = Axios.post("http://18.233.162.213:3001/api/userbypseudo", {
+        const promise = Axios.post("http://localhost:3001/api/userbypseudo", {
             pseudo: dest,
         }).then((res) => {
             let url =
-                "http://18.233.162.213:3001/silver-cipher/data/public_keys/" +
+                "http://localhost:3001/silver-cipher/data/public_keys/" +
                 res.data[0].cle_publique +
                 ".pem";
 
@@ -39,26 +39,34 @@ const New = () => {
         const reponse = await fetch(url);
         var publicKey = await reponse.text(); // .json() is asynchronous and therefore must be awaited
 
+        fs.writeFileSync('./temp/message', mess)
+
         let srcFile = fs.readFileSync(file, "hex");
+        let srcMess = fs.readFileSync('./temp/message', "hex");
+
 
         let key = crypto.randomBytes(16).toString("hex");
         let algorithm = "aes-256-cbc";
         let iv = Buffer.from("979843777c873b5a2060c2ad968a20d9", "hex");
-        let cipher = crypto.createCipheriv(algorithm, key, iv);
 
-        let updFile = cipher.update(srcFile, "hex", "hex") + cipher.final("hex");
+        let cipherFile = crypto.createCipheriv(algorithm, key, iv);
+        let updFile = cipherFile.update(srcFile, "hex", "hex") + cipherFile.final("hex");
+
+        let cipherMess = crypto.createCipheriv(algorithm, key, iv);
+        let updMess = cipherMess.update(srcMess, "hex", "hex") + cipherMess.final("hex");
 
         fs.writeFileSync("./temp/encfile", updFile, { encoding: "hex" });
-        //fs.writeFileSync("./temp/encmessage", updMess, { encoding: "hex" });
+        fs.writeFileSync("./temp/encmessage", updMess, { encoding: "hex" });
 
         let separatedFile = file.split("\\");
-        let fileName = separatedFile[separatedFile.length-1];
+        let fileName = separatedFile[separatedFile.length - 1];
         let separatedFileName = fileName.split(".");
-        let extension = separatedFileName[separatedFileName.length-1]
+        let extension = separatedFileName[separatedFileName.length - 1]
 
-        let name_enc_file = crypto.randomBytes(16).toString("hex")+"."+extension;
+        let name_enc_file = crypto.randomBytes(16).toString("hex") + "." + extension;
         let name_enc_keyfile = crypto.randomBytes(16).toString("hex");
         let name_enc_mess = crypto.randomBytes(16).toString("hex");
+        let name_enc_sign = crypto.randomBytes(16).toString("hex");
 
         const form_file = new FormData();
         form_file.append(
@@ -67,7 +75,7 @@ const New = () => {
             name_enc_file
         );
 
-        Axios.post("http://18.233.162.213:3001/api/upload/enc_file", form_file, {
+        Axios.post("http://localhost:3001/api/upload/enc_file", form_file, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },
@@ -75,7 +83,7 @@ const New = () => {
             console.log(response.data.message);
         });
 
-        /*
+
         let form_mess = new FormData();
         form_mess.append(
             "file",
@@ -83,14 +91,13 @@ const New = () => {
             name_enc_mess
         );
 
-        Axios.post("http://18.233.162.213:3001/api/upload/enc_message", form_mess, {
+        Axios.post("http://localhost:3001/api/upload/enc_message", form_mess, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },
         }).then((response) => {
             console.log(response.data.message);
         });
-        */
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -117,13 +124,40 @@ const New = () => {
             name_enc_keyfile
         );
 
-        Axios.post("http://18.233.162.213:3001/api/upload/enc_key", form_key, {
+        Axios.post("http://localhost:3001/api/upload/enc_key", form_key, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },
         }).then((response) => {
             console.log(response.data.message);
         });
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////
+
+        let privateKey = fs.readFileSync('./keys/private.pem');
+
+        const data = fs.readFileSync('./temp/crypted_key');
+        const algorithmSign = "SHA256";
+
+        const signature = crypto.sign(algorithmSign, data, privateKey);
+        fs.writeFileSync('./temp/signature', signature);
+
+        let form_sign = new FormData();
+        form_sign.append(
+            "file",
+            fs.createReadStream("./temp/signature"),
+            name_enc_sign
+        );
+
+        Axios.post("http://localhost:3001/api/upload/enc_sign", form_sign, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        }).then((response) => {
+            console.log(response.data.message);
+        });
+
+
 
         /*
         let src = fs.readFileSync(file, { encoding: "hex" });
@@ -174,7 +208,7 @@ const New = () => {
             name_enc_file
         );
 
-        Axios.post("http://18.233.162.213:3001/api/upload/enc_file", form_file, {
+        Axios.post("http://localhost:3001/api/upload/enc_file", form_file, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },
@@ -189,7 +223,7 @@ const New = () => {
             name_enc_keyfile
         );
 
-        Axios.post("http://18.233.162.213:3001/api/upload/enc_key", form_key, {
+        Axios.post("http://localhost:3001/api/upload/enc_key", form_key, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },
@@ -205,7 +239,7 @@ const New = () => {
             name_enc_mess
         );
 
-        Axios.post("http://18.233.162.213:3001/api/upload/enc_message", form_mess, {
+        Axios.post("http://localhost:3001/api/upload/enc_message", form_mess, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },
@@ -215,26 +249,31 @@ const New = () => {
         */
 
 
-        Axios.post("http://18.233.162.213:3001/api/newtransfer", {
+        Axios.post("http://localhost:3001/api/newtransfer", {
             expediteur: username,
             destinataire: idDest,
             pathFichCrypt: name_enc_file,
             pathCleCrypt: name_enc_keyfile,
             pathCont: name_enc_mess,
+            pathSign: name_enc_sign
         })
 
-        
+
         fs.unlinkSync('./temp/encfile')
         fs.unlinkSync('./temp/crypted_key')
         fs.unlinkSync('./temp/clear_key')
-        /*
         fs.unlinkSync('./temp/encmessage')
         fs.unlinkSync('./temp/message')
-        */
+        fs.unlinkSync('./temp/signature')
 
         setDest('')
         setFile('')
         setMess('')
+
+        document.getElementById("to").value = "";
+        document.getElementById("attachement").value = "";
+        document.getElementById("content-message-id").value = "";
+
     };
 
     return (

@@ -47,7 +47,7 @@ const sendMessage = () => {
 };
 
 const getUsers = () => {
-    axios.get("http://18.233.162.213:3001/api/user/all").then((response) => {
+    axios.get("http://localhost:3001/api/user/all").then((response) => {
         store.set("users", response.data);
     });
 };

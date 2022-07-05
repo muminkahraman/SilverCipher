@@ -46,7 +46,7 @@ app.post("/api/upload/enc_file", async (req, res) => {
     const url = "/silver-cipher/data/enc_files/" + filename;
     await util.promisify(file.mv)(".public" + url);
     res.json({
-        message: "File uploaded successfully as "+ filename,
+        message: "File uploaded successfully as " + filename,
         url: url,
     });
 });
@@ -63,7 +63,7 @@ app.post("/api/upload/enc_message", async (req, res) => {
     const url = "/silver-cipher/data/enc_message/" + filename;
     await util.promisify(file.mv)(".public" + url);
     res.json({
-        message: "Message uploaded successfully as "+filename,
+        message: "Message uploaded successfully as " + filename,
         url: url,
     });
 });
@@ -80,7 +80,24 @@ app.post("/api/upload/enc_key", async (req, res) => {
     const url = "/silver-cipher/data/enc_keys/" + filename;
     await util.promisify(file.mv)(".public" + url);
     res.json({
-        message: "Key uploaded successfully as "+filename,
+        message: "Key uploaded successfully as " + filename,
+        url: url,
+    });
+});
+
+app.post("/api/upload/enc_sign", async (req, res) => {
+
+    if (!req.files) {
+        return res.status(400).send("No files were uploaded.");
+    }
+
+    const file = req.files.file;
+    const filename = file.name;
+
+    const url = "/silver-cipher/data/enc_signs/" + filename;
+    await util.promisify(file.mv)(".public" + url);
+    res.json({
+        message: "Signature uploaded successfully as " + filename,
         url: url,
     });
 });
@@ -139,6 +156,7 @@ app.post("/api/newtransfer", (req, res) => {
     let pathFichCrypt = req.body.pathFichCrypt;
     let pathCleCrypt = req.body.pathCleCrypt;
     let pathCont = req.body.pathCont;
+    let pathSign = req.body.pathSign;
 
     db.query(
         "select idUser from users where pseudo = ?",
@@ -148,13 +166,14 @@ app.post("/api/newtransfer", (req, res) => {
                 console.log(err);
             } else {
                 db.query(
-                    "insert into transfer (expediteur, destinataire, path_fich_crypt, path_cle_crypt, path_contexte) values (?,?,?,?,?)",
+                    "insert into transfer (expediteur, destinataire, path_fich_crypt, path_cle_crypt, path_contexte, path_sign) values (?,?,?,?,?,?)",
                     [
                         result[0].idUser,
                         destinataire,
                         pathFichCrypt,
                         pathCleCrypt,
                         pathCont,
+                        pathSign
                     ],
                     (error, resultt) => {
                         if (err) {
@@ -165,7 +184,7 @@ app.post("/api/newtransfer", (req, res) => {
                         }
                     }
                 );
-                
+
             }
         }
     );
@@ -191,12 +210,13 @@ app.post('/api/transfer/receive', (req, res) => {
                 res.send(result);
             }
         }
-    )});
+    )
+});
 
 
 app.post('/api/transfer/received', (req, res) => {
 
-    db.query('select idTransfer, date, path_fich_crypt, path_cle_crypt, path_contexte, pseudo from transfer join users on transfer.expediteur = users.idUser where destinataire = (select idUser from users where pseudo like ?)', [req.body.pseudo],
+    db.query('select idTransfer, date, path_fich_crypt, path_cle_crypt, path_contexte, path_sign, cle_publique, pseudo from transfer join users on transfer.expediteur = users.idUser where destinataire = (select idUser from users where pseudo like ?)', [req.body.pseudo],
         (err, result) => {
             if (err) {
                 console.log(err);
@@ -255,9 +275,19 @@ app.post('/api/transfer', (req, res) => {
     );
 });
 
-app.delete('/api/user', (req, res) => {
+app.post('/api/delete/user', (req, res) => {
+    console.log(req.body.pseudo)
 
-    db.query('delete from users where idUser = ?', [req.body.id],
+    db.query('delete from transfer where(expediteur = (select idUser from users where pseudo = ?) || destinataire = (select idUser from users where pseudo = ?))', [req.body.pseudo, req.body.pseudo],
+        (err) => {
+            if (err) {
+                console.log(err);
+            } else {
+            }
+        }
+    );
+
+    db.query('delete from users where pseudo = ?', [req.body.pseudo],
         (err, result) => {
             if (err) {
                 console.log(err);
