@@ -6,13 +6,7 @@ import { useStateValue } from '../state/StateProvider';
 
 const Params = () => {
 
-    const [{ username, email, tel, password }, dispatch] = useStateValue();
-    const value = useStateValue()[0];
-
-    function testUser() {
-        console.log(username, email, tel, password)
-        console.log(value)
-    }
+    const dispatch = useStateValue()[1];
 
     function resetStore() {
         dispatch({ type: "RESET" })
@@ -25,9 +19,9 @@ const Params = () => {
                 <Link to='/' onClick={() => resetStore()} className="paramItem">
                     Supprimer mon compte
                 </Link>
-                <div onClick={() => testUser()} className="paramItem">
-                    Affiche user
-                </div>
+                <Link to='/menu/changepass' className="paramItem">
+                    Changer mon mot de passe
+                </Link>
                 <Link to='/' className="paramItem">
                     Verouiller
                 </Link>
