@@ -51,7 +51,12 @@ const New = () => {
         fs.writeFileSync("./temp/encfile", updFile, { encoding: "hex" });
         //fs.writeFileSync("./temp/encmessage", updMess, { encoding: "hex" });
 
-        let name_enc_file = crypto.randomBytes(16).toString("hex");
+        let separatedFile = file.split("\\");
+        let fileName = separatedFile[separatedFile.length-1];
+        let separatedFileName = fileName.split(".");
+        let extension = separatedFileName[separatedFileName.length-1]
+
+        let name_enc_file = crypto.randomBytes(16).toString("hex")+"."+extension;
         let name_enc_keyfile = crypto.randomBytes(16).toString("hex");
         let name_enc_mess = crypto.randomBytes(16).toString("hex");
 

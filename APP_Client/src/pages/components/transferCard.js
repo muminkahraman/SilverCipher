@@ -24,7 +24,7 @@ const Transfer = ({ transfer }) => {
         let urlMess = "http://localhost:3001/silver-cipher/data/enc_message/" + transfer.path_contexte
 
         https.get(urlFile, (res) => {
-            const file = fs.createWriteStream(`received_file`);
+            const file = fs.createWriteStream(`./temp/received_file`);
             res.pipe(file);
 
             file.on('finish', () => {
@@ -32,7 +32,7 @@ const Transfer = ({ transfer }) => {
                 console.log(`File downloaded!`);
 
                 https.get(urlKey, (res) => {
-                    const file = fs.createWriteStream(`received_key`);
+                    const file = fs.createWriteStream(`./temp/received_key`);
                     res.pipe(file);
 
                     file.on('finish', () => {
@@ -56,46 +56,54 @@ const Transfer = ({ transfer }) => {
                                 console.log(`File downloaded!`);
                                 */
 
-                                const privateKey = fs.readFileSync('./keys/private.pem')
+                        const privateKey = fs.readFileSync('./keys/private.pem')
 
-                                //let key = "6c7e467c8fe130e2d96a37dfb57bd78a"
-                                const cryptedKey = fs.readFileSync('./received_key');
+                        //let key = "6c7e467c8fe130e2d96a37dfb57bd78a"
+                        const cryptedKey = fs.readFileSync('./temp/received_key');
 
-                                const decryptedData = crypto.privateDecrypt(
-                                    {
-                                        key: privateKey,
-                                        padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
-                                        oaepHash: "sha256",
-                                    },
+                        const decryptedData = crypto.privateDecrypt(
+                            {
+                                key: privateKey,
+                                padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
+                                oaepHash: "sha256",
+                            },
 
-                                    cryptedKey
-                                );
+                            cryptedKey
+                        );
 
-                                fs.writeFileSync("./decrypted_key", decryptedData.toString());
+                        fs.writeFileSync("./temp/decrypted_key", decryptedData.toString());
 
-                                const decryptedKey = fs.readFileSync('./decrypted_key')
+                        const decryptedKey = fs.readFileSync('./temp/decrypted_key')
 
-                                let algorithm = "aes-256-cbc";
-                                let iv = Buffer.from("979843777c873b5a2060c2ad968a20d9", "hex");
-                                let encFile = fs.readFileSync("./received_file", { encoding: "hex" });
-                                //let encMess = fs.readFileSync("./received_mess", { encoding: "hex" });
+                        let algorithm = "aes-256-cbc";
+                        let iv = Buffer.from("979843777c873b5a2060c2ad968a20d9", "hex");
+                        let encFile = fs.readFileSync("./temp/received_file", { encoding: "hex" });
+                        //let encMess = fs.readFileSync("./received_mess", { encoding: "hex" });
 
-                                let decipher = crypto.createDecipheriv(algorithm, decryptedKey, iv);
+                        let decipher = crypto.createDecipheriv(algorithm, decryptedKey, iv);
 
-                                let decFile = decipher.update(encFile, "hex", "hex") + decipher.final("hex");
-                                fs.writeFileSync("./final.zip", decFile, "hex");
+                        let decFile = decipher.update(encFile, "hex", "hex") + decipher.final("hex");
 
-                                //let decMess = decipher.update(encMess, "hex", "hex") + decipher.final("hex");
-                                //fs.writeFileSync("./message.txt", decMess, "hex");
+                        let extension = transfer.path_fich_crypt.split('.')[1]
+                        let destination = "./temp/final." + extension;
+
+                        fs.writeFileSync(destination, decFile, "hex");
+
+                        fs.unlinkSync('./temp/received_file')
+                        fs.unlinkSync('./temp/decrypted_key')
+                        fs.unlinkSync('./temp/received_key')
+
+                        //let decMess = decipher.update(encMess, "hex", "hex") + decipher.final("hex");
+                        //fs.writeFileSync("./message.txt", decMess, "hex");
 
 
-                                /*
-                            });
+                        /*
+                    });
 
-                        }).on("error", (err) => {
-                            console.log("Error: ", err.message);
-                        });
-                        */
+                }).on("error", (err) => {
+                    console.log("Error: ", err.message);
+                });
+                */
 
                     });
 
