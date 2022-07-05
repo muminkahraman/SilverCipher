@@ -85,7 +85,7 @@ const Transfer = ({ transfer }) => {
                         let decFile = decipher.update(encFile, "hex", "hex") + decipher.final("hex");
 
                         let extension = transfer.path_fich_crypt.split('.')[1]
-                        let destination = "./temp/final." + extension;
+                        let destination = "./temp/Transfer_from_"+transfer.pseudo+"_on_"+ transfer.date.split('T')[0] +"." + extension;
 
                         fs.writeFileSync(destination, decFile, "hex");
 
