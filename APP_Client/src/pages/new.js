@@ -41,24 +41,25 @@ const New = () => {
 
         let srcFile = fs.readFileSync(file, "hex");
 
-        let key = "6c7e467c8fe130e2d96a37dfb57bd78a";
+        let key = crypto.randomBytes(16).toString("hex");
         let algorithm = "aes-256-cbc";
         let iv = Buffer.from("979843777c873b5a2060c2ad968a20d9", "hex");
         let cipher = crypto.createCipheriv(algorithm, key, iv);
 
         let updFile = cipher.update(srcFile, "hex", "hex") + cipher.final("hex");
 
-        fs.writeFileSync("./encfile", updFile, { encoding: "hex" });
+        fs.writeFileSync("./temp/encfile", updFile, { encoding: "hex" });
+        //fs.writeFileSync("./temp/encmessage", updMess, { encoding: "hex" });
 
-        let name_enc_file = 'encfile';
-        let name_enc_keyfile = 'enckey';
-        let name_enc_mess = 'encmess';
+        let name_enc_file = crypto.randomBytes(16).toString("hex");
+        let name_enc_keyfile = crypto.randomBytes(16).toString("hex");
+        let name_enc_mess = crypto.randomBytes(16).toString("hex");
 
         const form_file = new FormData();
         form_file.append(
             "file",
-            fs.readFileSync("./encfile"),
-            'encfile'
+            fs.readFileSync("./temp/encfile"),
+            name_enc_file
         );
 
         Axios.post("http://localhost:3001/api/upload/enc_file", form_file, {
@@ -69,11 +70,28 @@ const New = () => {
             console.log(response.data.message);
         });
 
+        /*
+        let form_mess = new FormData();
+        form_mess.append(
+            "file",
+            fs.createReadStream("./temp/encmessage"),
+            name_enc_mess
+        );
+
+        Axios.post("http://localhost:3001/api/upload/enc_message", form_mess, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        }).then((response) => {
+            console.log(response.data.message);
+        });
+        */
+
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        fs.writeFileSync("./clear_key", key);
+        fs.writeFileSync("./temp/clear_key", key);
 
-        const keyToEncrypt = fs.readFileSync("./clear_key");
+        const keyToEncrypt = fs.readFileSync("./temp/clear_key");
 
         const encryptedData = crypto.publicEncrypt(
             {
@@ -85,13 +103,13 @@ const New = () => {
             Buffer.from(keyToEncrypt)
         );
 
-        fs.writeFileSync("./crypted_key", encryptedData);
+        fs.writeFileSync("./temp/crypted_key", encryptedData);
 
         let form_key = new FormData();
         form_key.append(
             "file",
-            fs.createReadStream("./crypted_key"),
-            'enckey'
+            fs.createReadStream("./temp/crypted_key"),
+            name_enc_keyfile
         );
 
         Axios.post("http://localhost:3001/api/upload/enc_key", form_key, {
@@ -200,10 +218,11 @@ const New = () => {
             pathCont: name_enc_mess,
         })
 
-        /*
+        
         fs.unlinkSync('./temp/encfile')
-        fs.unlinkSync('./temp/enckey')
-        fs.unlinkSync('./temp/keyfile')
+        fs.unlinkSync('./temp/crypted_key')
+        fs.unlinkSync('./temp/clear_key')
+        /*
         fs.unlinkSync('./temp/encmessage')
         fs.unlinkSync('./temp/message')
         */

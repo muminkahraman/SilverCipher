@@ -39,32 +39,63 @@ const Transfer = ({ transfer }) => {
                         file.close();
                         console.log(`Key downloaded!`);
 
-                        const privateKey = fs.readFileSync('./keys/private.pem')
+                        /*
+                        https.get(urlMess, (res) => {
 
-                        //let key = "6c7e467c8fe130e2d96a37dfb57bd78a"
-                        const cryptedKey = fs.readFileSync('./received_key');
+                            // Open file in local filesystem
+                            const file = fs.createWriteStream(`received_mess`);
 
-                        const decryptedData = crypto.privateDecrypt(
-                            {
-                                key: privateKey,
-                                padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
-                                oaepHash: "sha256",
-                            },
+                            // Write data into local file
+                            res.pipe(file);
 
-                            cryptedKey
-                        );
 
-                        fs.writeFileSync("./decrypted_key", decryptedData.toString());
+                            // Close the file
+                            file.on('finish', () => {
 
-                        const decryptedKey = fs.readFileSync('./decrypted_key')
+                                file.close();
+                                console.log(`File downloaded!`);
+                                */
 
-                        let algorithm = "aes-256-cbc";
-                        let iv = Buffer.from("979843777c873b5a2060c2ad968a20d9", "hex");
-                        let encFile = fs.readFileSync("./received_file", { encoding: "hex" });
+                                const privateKey = fs.readFileSync('./keys/private.pem')
 
-                        let decipher = crypto.createDecipheriv(algorithm, decryptedKey, iv);
-                        let dec = decipher.update(encFile, "hex", "hex") + decipher.final("hex");
-                        fs.writeFileSync("./decfilee.jpg", dec, "hex");
+                                //let key = "6c7e467c8fe130e2d96a37dfb57bd78a"
+                                const cryptedKey = fs.readFileSync('./received_key');
+
+                                const decryptedData = crypto.privateDecrypt(
+                                    {
+                                        key: privateKey,
+                                        padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
+                                        oaepHash: "sha256",
+                                    },
+
+                                    cryptedKey
+                                );
+
+                                fs.writeFileSync("./decrypted_key", decryptedData.toString());
+
+                                const decryptedKey = fs.readFileSync('./decrypted_key')
+
+                                let algorithm = "aes-256-cbc";
+                                let iv = Buffer.from("979843777c873b5a2060c2ad968a20d9", "hex");
+                                let encFile = fs.readFileSync("./received_file", { encoding: "hex" });
+                                //let encMess = fs.readFileSync("./received_mess", { encoding: "hex" });
+
+                                let decipher = crypto.createDecipheriv(algorithm, decryptedKey, iv);
+
+                                let decFile = decipher.update(encFile, "hex", "hex") + decipher.final("hex");
+                                fs.writeFileSync("./final.zip", decFile, "hex");
+
+                                //let decMess = decipher.update(encMess, "hex", "hex") + decipher.final("hex");
+                                //fs.writeFileSync("./message.txt", decMess, "hex");
+
+
+                                /*
+                            });
+
+                        }).on("error", (err) => {
+                            console.log("Error: ", err.message);
+                        });
+                        */
 
                     });
 
@@ -77,7 +108,6 @@ const Transfer = ({ transfer }) => {
         }).on("error", (err) => {
             console.log("Error: ", err.message);
         });
-
 
 
         /*
