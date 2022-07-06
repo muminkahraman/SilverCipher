@@ -16,6 +16,15 @@ const Sign = () => {
         return !isNaN(val)
     }
 
+    const testClickLinkConnect = (event) => {
+        if (event.keyCode === 13) {
+            clickLinkConnect('5');
+        }    }
+
+    const clickLinkConnect = () => {
+        document.getElementById('linkConnect').click();
+    }
+
     const [pseudo, setPseudo] = useState('');
     const [email, setEmail] = useState('');
     const [tel, setTel] = useState('');
@@ -158,8 +167,14 @@ const Sign = () => {
                         {!testConnecte() ?
                             <>
                                 <h1>Connectez vous {username}</h1>
-                                <input type="password" placeholder="Mot de passe" id="password_in" />
-                                <Link className="sign_link" to="/verify" onClick={() => signIn(document.getElementById("password_in").value)}> Connectez vous </Link>                        </> :
+                                <input type="password" placeholder="Mot de passe" id="password_in" 
+                                onKeyDown={(event) => testClickLinkConnect(event)}
+                                />
+                                <Link className="sign_link" to="/verify" 
+                                onClick={() => signIn(document.getElementById("password_in").value)}
+                                id="linkConnect"
+                                > Connectez vous </Link>                       
+                            </> :
                             <h1>Veuillez vous inscrire</h1>
                         }
                     </form>
