@@ -5,11 +5,15 @@ import { Link } from "react-router-dom";
 
 const ReceivedMessage = () => {
 
-    const [{ message }] = useStateValue();
+    const [{ message }, dispatch] = useStateValue();
+
+    const resetMess = () => {
+        dispatch({ type: "SET_MESSAGE", payload: { message: "" } })
+    }
 
     return (
         <>
-            <Link className="retourArriere" to="/menu/recept">
+            <Link className="retourArriere" to="/menu/recept"onClick={() => {resetMess()}}>
                 <div className="fleche">&#8592; </div>
             </Link>
 

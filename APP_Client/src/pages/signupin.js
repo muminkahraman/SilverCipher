@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, { useState } from "react"
 import "../App.css"
 import { Link } from "react-router-dom"
 import { useStateValue } from '../state/StateProvider';
@@ -20,6 +20,8 @@ const Sign = () => {
     const [email, setEmail] = useState('');
     const [tel, setTel] = useState('');
     const [pass, setPass] = useState('');
+    const [cguAcc, setCguAcc] = useState(false);
+
 
 
     const [{ username, password }, dispatch] = useStateValue();
@@ -123,14 +125,18 @@ const Sign = () => {
                         {testConnecte() ?
                             <><h1>Cr&#xE9;er un compte</h1>
                                 <input type="text" id="pseudo" placeholder="Pseudo" onChange={(e) => setPseudo(e.target.value)} />
-                                <input type="email" id="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)}/>
-                                <input type="tel" id="tel" placeholder="T&#xE9;l&#xE9;phone" onChange={(e) => setTel(e.target.value)}/>
-                                <input type="password" id="password_up" placeholder="Mot de passe" onChange={(e) => setPass(e.target.value)}/>
-
-                                {(  isNum(tel)
+                                <input type="email" id="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
+                                <input type="tel" id="tel" placeholder="T&#xE9;l&#xE9;phone" onChange={(e) => setTel(e.target.value)} />
+                                <input type="password" id="password_up" placeholder="Mot de passe" onChange={(e) => setPass(e.target.value)} />
+                                <div className="cguLine">
+                                    <input className="cguCheck" type="checkbox" id="cgu" name="cgu" onClick={() => { setCguAcc(!cguAcc) }} />
+                                    <label for="cgu" className="cguLabel">J'accepte les <a href="https://example.com" target="_blank" rel="noopener noreferrer">Conditions G&#xE9;n&#xE9;rales d'Utilisation</a> </label>
+                                </div>
+                                {(isNum(tel)
                                     && (tel.length === 10)
                                     && (email.indexOf('@') !== -1)
                                     && (pseudo.value !== "")
+                                    && (cguAcc)
                                 )
                                     ?
                                     <Link className="sign_link" to="/menu/recept" onClick={() => {
@@ -140,7 +146,7 @@ const Sign = () => {
                                             tel,
                                             pass)
                                     }}> Inscrivez vous </Link>
-                                    : <h2>Veuillez renseigner correctement tous les champs</h2>
+                                    : <h3>Veuillez renseigner correctement tous les champs et accepter les CGU</h3>
                                 }
 
                             </> :

@@ -5,8 +5,8 @@ import { useStateValue } from '../state/StateProvider';
 
 const ChangePass = () => {
 
-    const [newPass, setNewPass] = useState(null);
-    const [newPassVerif, setNewPassVerif] = useState(null);
+    const [newPass, setNewPass] = useState("");
+    const [newPassVerif, setNewPassVerif] = useState("");
 
     const [{username, email, tel }, dispatch] = useStateValue();
 

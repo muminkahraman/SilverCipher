@@ -11,7 +11,6 @@ import Params from "./params"
 import Envoi from "./envoi"
 import New from "./new"
 import ReceivedMessage from "./receivedMessage"
-import SentMessage from './sentMessage'
 import ChangePass from './changePass'
 
 import paramIcon from '../logos/param.svg'
@@ -71,7 +70,6 @@ export default function Menu() {
               <Route path="/menu/brouillon" component={Brouillon} />
               <Route path="/menu/new" component={New} />
               <Route path="/menu/receivedmessage" component={ReceivedMessage} />
-              <Route path="/menu/sentmessage" component={SentMessage} />
               <Route path="/menu/changepass" component={ChangePass} />
 
             </main>

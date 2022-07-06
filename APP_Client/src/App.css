@@ -590,3 +590,20 @@ code {
 .changePassLabel{
     font-size: x-large;
 }
+
+.cguLine{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.cguLabel{
+    font-size:small;
+    width: 80%;
+}
+
+.cguCheck{
+    width: 20%;
+}
