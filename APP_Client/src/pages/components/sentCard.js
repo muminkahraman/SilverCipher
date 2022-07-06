@@ -11,7 +11,7 @@ const Transfer = ({ sent }) => {
         var date = dateTotale[0];
         var horairereTotal = dateTotale[1].split('.');
         var horaire = horairereTotal[0].split(':')
-        var heure = Number(horaire[0]) + 4;
+        var heure = Number(horaire[0]) + 2;
 
         var trueHour = heure + ':' + horaire[1] + ':' + horaire[2]
         const deleteTransfer = async () => {
