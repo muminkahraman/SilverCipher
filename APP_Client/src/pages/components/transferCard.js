@@ -13,7 +13,7 @@ const Transfer = ({ transfer }) => {
 
     const dispatch = useStateValue()[1];
 
-    const verify = () => {
+    const verify = async () => {
 
         let urlKey = "http://18.233.162.213:3001/silver-cipher/data/enc_keys/" + transfer.path_cle_crypt
         let urlSign = "http://18.233.162.213:3001/silver-cipher/data/enc_signs/" + transfer.path_sign
@@ -29,7 +29,7 @@ const Transfer = ({ transfer }) => {
             return url;
         });
 
-        urlPub = await promise;
+        let urlPub = await promise;
 
         https.get(urlKey, (res) => {
             const file = fs.createWriteStream(`./temp/received_key`);
