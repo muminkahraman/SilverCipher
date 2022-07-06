@@ -15,9 +15,9 @@ const Transfer = ({ transfer }) => {
 
     const verify = () => {
 
-        let urlKey = "http://localhost:3001/silver-cipher/data/enc_keys/" + transfer.path_cle_crypt
-        let urlSign = "http://localhost:3001/silver-cipher/data/enc_signs/" + transfer.path_sign
-        let urlPub = "http://localhost:3001/silver-cipher/data/public_keys/" + transfer.cle_publique + ".pem"
+        let urlKey = "http://18.233.162.213:3001/silver-cipher/data/enc_keys/" + transfer.path_cle_crypt
+        let urlSign = "http://18.233.162.213:3001/silver-cipher/data/enc_signs/" + transfer.path_sign
+        let urlPub = "http://18.233.162.213:3001/silver-cipher/data/public_keys/" + transfer.cle_publique + ".pem"
 
         https.get(urlKey, (res) => {
             const file = fs.createWriteStream(`./temp/received_key`);
@@ -90,10 +90,10 @@ const Transfer = ({ transfer }) => {
 
     const updateMessage = () => {
 
-        let urlMess = "http://localhost:3001/silver-cipher/data/enc_message/" + transfer.path_contexte
-        let urlKey = "http://localhost:3001/silver-cipher/data/enc_keys/" + transfer.path_cle_crypt
-        let urlSign = "http://localhost:3001/silver-cipher/data/enc_signs/" + transfer.path_sign
-        let urlPub = "http://localhost:3001/silver-cipher/data/public_keys/" + transfer.cle_publique + ".pem"
+        let urlMess = "http://18.233.162.213:3001/silver-cipher/data/enc_message/" + transfer.path_contexte
+        let urlKey = "http://18.233.162.213:3001/silver-cipher/data/enc_keys/" + transfer.path_cle_crypt
+        let urlSign = "http://18.233.162.213:3001/silver-cipher/data/enc_signs/" + transfer.path_sign
+        let urlPub = "http://18.233.162.213:3001/silver-cipher/data/public_keys/" + transfer.cle_publique + ".pem"
 
 
         https.get(urlKey, (res) => {
@@ -217,10 +217,10 @@ const Transfer = ({ transfer }) => {
 
     const download = async () => {
 
-        let urlFile = "http://localhost:3001/silver-cipher/data/enc_files/" + transfer.path_fich_crypt
-        let urlKey = "http://localhost:3001/silver-cipher/data/enc_keys/" + transfer.path_cle_crypt
-        let urlSign = "http://localhost:3001/silver-cipher/data/enc_signs/" + transfer.path_sign
-        let urlPub = "http://localhost:3001/silver-cipher/data/public_keys/" + transfer.cle_publique + ".pem"
+        let urlFile = "http://18.233.162.213:3001/silver-cipher/data/enc_files/" + transfer.path_fich_crypt
+        let urlKey = "http://18.233.162.213:3001/silver-cipher/data/enc_keys/" + transfer.path_cle_crypt
+        let urlSign = "http://18.233.162.213:3001/silver-cipher/data/enc_signs/" + transfer.path_sign
+        let urlPub = "http://18.233.162.213:3001/silver-cipher/data/public_keys/" + transfer.cle_publique + ".pem"
 
 
         https.get(urlFile, (res) => {
@@ -365,7 +365,7 @@ const Transfer = ({ transfer }) => {
 
         var trueHour = heure + ':' + horaire[1] + ':' + horaire[2]
         const deleteTransfer = async () => {
-            await axios.post("http://localhost:3001/api/transferDeleteTest", { id: transfer.idTransfer }).then((response) => {
+            await axios.post("http://18.233.162.213:3001/api/transferDeleteTest", { id: transfer.idTransfer }).then((response) => {
                 console.log(response.data);
             });
         }

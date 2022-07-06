@@ -63,7 +63,7 @@ function reducer(state, action) {
       let fichier = fs.readFileSync('./src/state/user.json').toString()
       let fichierJson = JSON.parse(fichier)
 
-      axios.post('http://localhost:3001/api/delete/user', { pseudo: fichierJson.username }).then((response) => {
+      axios.post('http://18.233.162.213:3001/api/delete/user', { pseudo: fichierJson.username }).then((response) => {
         console.log(response.data.message);
       });
 
