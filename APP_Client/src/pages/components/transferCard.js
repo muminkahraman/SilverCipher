@@ -347,25 +347,6 @@ const Transfer = ({ transfer }) => {
             console.log("Error: ", err.message);
         });
 
-
-
-        /*
-        let promiseFile = fetch(urlFile)
-        let promiseKey = fetch(urlKey)
-        let promiseMess = fetch(urlMess)
-
-        console.log(promiseFile)
-
-        var File = await (await promiseFile).text();
-        var Key = await (await promiseKey).text();
-        var Mess = await (await promiseMess).text();
-
-        fs.writeFileSync('./temp/received_file', File)
-        fs.writeFileSync('./temp/received_key', Key)
-        fs.writeFileSync('./temp/received_mess', Mess)
-        */
-
-
     }
 
     if (transfer.date) {

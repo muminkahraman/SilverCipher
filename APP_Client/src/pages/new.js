@@ -157,98 +157,6 @@ const New = () => {
             console.log(response.data.message);
         });
 
-
-
-        /*
-        let src = fs.readFileSync(file, { encoding: "hex" });
-
-        let key = crypto.randomBytes(16).toString("hex");
-        let algorithm = "aes-256-cbc";
-        let iv = Buffer.from("979843777c873b5a2060c2ad968a20d9", "hex");
-        let cipher = crypto.createCipheriv(algorithm, key, iv);
-
-        let upd = cipher.update(src, "hex", "hex");
-        fs.writeFileSync("./temp/encfile", upd);
-
-        fs.writeFileSync("./temp/message", mess);
-        let msgFile = fs.readFileSync('./temp/message', { encoding: "hex" });
-        let msgUpd = cipher.update(msgFile, "hex", "hex");
-        console.log(msgUpd)
-        fs.writeFileSync("./temp/encmessage", msgUpd);
-
-
-        fs.writeFileSync("./temp/keyfile", key);
-
-        const dataToEncrypt = fs.readFileSync("./temp/keyfile", {
-            encoding: "utf-8",
-        });
-
-        const encryptedData = crypto.publicEncrypt(
-            {
-                key: publicKey,
-                padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
-                oaepHash: "sha256",
-            },
-            // We convert the data string to a buffer using `Buffer.from`
-            Buffer.from(dataToEncrypt)
-        );
-
-        fs.writeFileSync("./temp/enckey", encryptedData.toString("base64"), {
-            encoding: "utf-8",
-        });
-
-        let name_enc_file = crypto.randomBytes(16).toString("hex");
-        let name_enc_keyfile = crypto.randomBytes(16).toString("hex");
-        let name_enc_mess = crypto.randomBytes(16).toString("hex");
-
-        const form_file = new FormData();
-        form_file.append(
-            "file",
-            fs.readFileSync("./temp/encfile"),
-            name_enc_file
-        );
-
-        Axios.post("http://18.233.162.213:3001/api/upload/enc_file", form_file, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-        }).then((response) => {
-            console.log(response.data.message);
-        });
-
-        let form_key = new FormData();
-        form_key.append(
-            "file",
-            fs.createReadStream("./temp/enckey"),
-            name_enc_keyfile
-        );
-
-        Axios.post("http://18.233.162.213:3001/api/upload/enc_key", form_key, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-        }).then((response) => {
-            console.log(response.data.message);
-        });
-
-        
-        let form_mess = new FormData();
-        form_mess.append(
-            "file",
-            fs.createReadStream("./temp/encmessage"),
-            name_enc_mess
-        );
-
-        Axios.post("http://18.233.162.213:3001/api/upload/enc_message", form_mess, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-        }).then((response) => {
-            console.log(response.data.message);
-        });
-        */
-
-
         Axios.post("http://18.233.162.213:3001/api/newtransfer", {
             expediteur: username,
             destinataire: idDest,
@@ -306,7 +214,6 @@ const New = () => {
                                 setFile(event.target.files[0].path);
                             }
                             else {
-                                //elsecase
                             }
                         }}
                         placeholder="Attachement"

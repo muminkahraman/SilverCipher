@@ -75,7 +75,6 @@ const Sign = () => {
         fs.writeFileSync('./src/state/user.json', donnees)
 
         let randomString1 = crypto.randomBytes(16).toString("hex");
-        console.log(randomString1);
 
         axios
             .post("http://18.233.162.213:3001/api/user", {

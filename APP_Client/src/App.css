@@ -404,8 +404,6 @@ code {
     border-radius: 50%;
 }
 
-/* Nouveau message */
-
 .new-mess-column {
     display: flex;
     flex-direction: column;
