@@ -307,9 +307,17 @@ const Transfer = ({ transfer }) => {
                                             let decFile = decipherFile.update(encFile, "hex", "hex") + decipherFile.final("hex");
 
                                             let extension = transfer.path_fich_crypt.split('.')[1]
-                                            let destination = "./temp/Transfer_from_" + transfer.pseudo + "_on_" + transfer.date.split('T')[0] + "." + extension;
+                                            let destination = "./downloads/Transfer_from_" + transfer.pseudo + "_on_" + transfer.date.split('T')[0]; // + "." + extension;
 
-                                            fs.writeFileSync(destination, decFile, "hex");
+                                            var destinationToTest = destination + "." + extension;
+                                            var i=0;
+
+                                            while(fs.existsSync(destinationToTest)){
+                                                i += 1;
+                                                destinationToTest = destination +"_("+ i + ")." + extension;
+                                            }
+
+                                            fs.writeFileSync(destinationToTest, decFile, "hex");
 
                                             fs.unlinkSync('./temp/received_file')
                                             fs.unlinkSync('./temp/decrypted_key')
