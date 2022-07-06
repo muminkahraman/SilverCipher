@@ -13,7 +13,7 @@ function createWindow() {
         width: 900, 
         height: 600,
         icon: "",
-        //resizable: false,
+        resizable: false,
         minHeight: 500,
         minWidth: 750,
 
@@ -32,7 +32,7 @@ function createWindow() {
     );
     mainWindow.on("closed", () => (mainWindow = null));
 
-    //mainWindow.setMenu(null);
+    mainWindow.setMenu(null);
 
 }
 
