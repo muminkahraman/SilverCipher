@@ -129,7 +129,7 @@ const Sign = () => {
                                 <input type="password" id="password_up" placeholder="Mot de passe" onChange={(e) => setPass(e.target.value)} />
                                 <div className="cguLine">
                                     <input className="cguCheck" type="checkbox" id="cgu" name="cgu" onClick={() => { setCguAcc(!cguAcc) }} />
-                                    <div className="cguLabel">J'accepte les <a href="https://example.com" target="_blank" rel="noopener noreferrer">Conditions G&#xE9;n&#xE9;rales d'Utilisation</a> </div>
+                                    <div className="cguLabel">J'accepte les <a href="http://18.233.162.213:80" target="_blank" rel="noopener noreferrer">Conditions G&#xE9;n&#xE9;rales d'Utilisation</a> </div>
                                 </div>
                                 {(isNum(tel)
                                     && (tel.length === 10)
