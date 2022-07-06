@@ -216,7 +216,7 @@ app.post('/api/transfer/receive', (req, res) => {
 
 app.post('/api/transfer/received', (req, res) => {
 
-    db.query('select idTransfer, date, path_fich_crypt, path_cle_crypt, path_contexte, path_sign, cle_publique, pseudo from transfer join users on transfer.expediteur = users.idUser where destinataire = (select idUser from users where pseudo like ?)', [req.body.pseudo],
+    db.query('select idTransfer, date, path_fich_crypt, path_cle_crypt, path_contexte, path_sign, cle_publique, pseudo from transfer join users on transfer.expediteur = users.idUser where destinataire = (select idUser from users where pseudo like ?) order by date desc', [req.body.pseudo],
         (err, result) => {
             if (err) {
                 console.log(err);
@@ -229,7 +229,7 @@ app.post('/api/transfer/received', (req, res) => {
 
 app.post('/api/transfer/sent', (req, res) => {
 
-    db.query('select idTransfer, date, path_fich_crypt, path_cle_crypt, path_contexte, pseudo from transfer join users on transfer.destinataire = users.idUser where expediteur = (select idUser from users where pseudo like ?)', [req.body.pseudo],
+    db.query('select idTransfer, date, path_fich_crypt, path_cle_crypt, path_contexte, pseudo from transfer join users on transfer.destinataire = users.idUser where expediteur = (select idUser from users where pseudo like ?) order by date desc', [req.body.pseudo],
         (err, result) => {
             if (err) {
                 console.log(err);
