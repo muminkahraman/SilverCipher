@@ -39,6 +39,25 @@ function reducer(state, action) {
         passwordAccepted: action.payload.passwordAccepted
       };
 
+    case 'SET_PASSWORD':
+
+      let userPass = {
+        username: action.payload.username,
+        email: action.payload.email,
+        tel: action.payload.tel,
+        password: action.payload.password,
+        repertoire: [],
+        passwordAccepted: false,
+        message: '',
+      }
+      let donneesPass = JSON.stringify(userPass)
+      fs.writeFileSync('./src/state/user.json', donneesPass)
+
+      return {
+        ...state,
+        password: action.payload.password
+      };
+
     case 'RESET':
 
       let fichier = fs.readFileSync('./src/state/user.json').toString()
@@ -80,12 +99,6 @@ function reducer(state, action) {
       return {
         ...state,
         message: action.payload.message
-      };
-
-    case 'SET_PASSWORD':
-      return {
-        ...state,
-        password: action.payload.password
       };
 
     default:

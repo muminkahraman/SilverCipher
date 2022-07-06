@@ -8,10 +8,10 @@ const ChangePass = () => {
     const [newPass, setNewPass] = useState(null);
     const [newPassVerif, setNewPassVerif] = useState(null);
 
-    const dispatch = useStateValue()[1];
+    const [{username, email, tel }, dispatch] = useStateValue();
 
     function setInReducer() {
-        dispatch({ type: "SET_PASSWORD", payload: { password: newPass } })
+        dispatch({ type: "SET_PASSWORD", payload: {username: username, email : email, tel: tel, password: newPass } })
     }
 
     return (
@@ -31,7 +31,7 @@ const ChangePass = () => {
                 className="changePassInput"
             />
             {(newPass === newPassVerif) ?
-            <Link to="/" className="changePassValider" onClick={() => setInReducer}>Valider</Link>
+            <Link to="/" className="changePassValider" onClick={() => setInReducer()}>Valider</Link>
             : <div>Le mot de passe et la v&#233;rification doivent &#234;tre &#233;gaux</div>
             }
         </div>
