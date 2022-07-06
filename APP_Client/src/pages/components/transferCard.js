@@ -17,7 +17,19 @@ const Transfer = ({ transfer }) => {
 
         let urlKey = "http://18.233.162.213:3001/silver-cipher/data/enc_keys/" + transfer.path_cle_crypt
         let urlSign = "http://18.233.162.213:3001/silver-cipher/data/enc_signs/" + transfer.path_sign
-        let urlPub = "http://18.233.162.213:3001/silver-cipher/data/public_keys/" + transfer.cle_publique + ".pem"
+
+        const promise = axios.post("http://18.233.162.213:3001/api/userbypseudo", {
+            pseudo: transfer.pseudo,
+        }).then((res) => {
+            let url =
+                "http://18.233.162.213:3001/silver-cipher/data/public_keys/" +
+                res.data[0].cle_publique +
+                ".pem";
+
+            return url;
+        });
+
+        urlPub = await promise;
 
         https.get(urlKey, (res) => {
             const file = fs.createWriteStream(`./temp/received_key`);
